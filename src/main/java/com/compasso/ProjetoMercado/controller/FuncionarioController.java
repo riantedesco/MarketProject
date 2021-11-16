@@ -55,4 +55,5 @@ public class FuncionarioController {
 		this.funcionarioService.remover(id);
 		return ResponseEntity.ok().build();
 	}
+	
 }
