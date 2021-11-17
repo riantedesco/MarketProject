@@ -13,6 +13,7 @@ import com.compasso.ProjetoMercado.dto.ClienteDto;
 import com.compasso.ProjetoMercado.dto.ClienteFormDto;
 import com.compasso.ProjetoMercado.entity.Cliente;
 import com.compasso.ProjetoMercado.repository.ClienteRepository;
+import com.compasso.ProjetoMercado.validation.Validation;
 
 @Service
 public class ClienteServiceImpl implements ClienteService {
@@ -22,10 +23,14 @@ public class ClienteServiceImpl implements ClienteService {
 
 	@Autowired
 	private ModelMapper mapper;
+	
+	@Autowired
+	private Validation validation;
 
 	@Override
 	public ClienteDto salvar(ClienteFormDto body) {
 		Cliente cliente = mapper.map(body, Cliente.class);
+		validation.validaCliente(cliente);
 		Cliente clienteResponse = this.clienteRepository.save(cliente);
 		return mapper.map(clienteResponse, ClienteDto.class);
 	}

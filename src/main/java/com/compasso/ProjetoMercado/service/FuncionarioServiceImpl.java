@@ -13,6 +13,7 @@ import com.compasso.ProjetoMercado.dto.FuncionarioDto;
 import com.compasso.ProjetoMercado.dto.FuncionarioFormDto;
 import com.compasso.ProjetoMercado.entity.Funcionario;
 import com.compasso.ProjetoMercado.repository.FuncionarioRepository;
+import com.compasso.ProjetoMercado.validation.Validation;
 
 @Service
 public class FuncionarioServiceImpl implements FuncionarioService {
@@ -22,10 +23,14 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 
 	@Autowired
 	private ModelMapper mapper;
+	
+	@Autowired
+	private Validation validation;
 
 	@Override
 	public FuncionarioDto salvar(FuncionarioFormDto body) {
 		Funcionario funcionario = mapper.map(body, Funcionario.class);
+		validation.validaFuncionario(funcionario);
 		Funcionario funcionarioResponse = this.funcionarioRepository.save(funcionario);
 		return mapper.map(funcionarioResponse, FuncionarioDto.class);
 	}
