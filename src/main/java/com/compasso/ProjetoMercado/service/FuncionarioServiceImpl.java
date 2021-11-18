@@ -49,7 +49,7 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 		if (funcionario.isPresent() == true) {
 			return mapper.map(funcionario.get(), FuncionarioDto.class);
 		}
-		throw new RuntimeException("Funcionario não encontrado");
+		throw new RuntimeException("Funcionário não encontrado");
 	}
 
 	@Override
@@ -63,7 +63,7 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 			Funcionario f = this.funcionarioRepository.save(funcionario.get());
 			return mapper.map(f, FuncionarioDto.class);
 		}
-		throw new RuntimeException("Funcionario não encontrado");
+		throw new RuntimeException("Funcionário não encontrado");
 	}
 
 	@Override
@@ -72,7 +72,7 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 		if (funcionario.isPresent() == true) {
 			this.funcionarioRepository.deleteById(id);
 		} else {
-			throw new RuntimeException("Funcionario não encontrado");
+			throw new RuntimeException("Funcionário não encontrado");
 		}
 	}
 }

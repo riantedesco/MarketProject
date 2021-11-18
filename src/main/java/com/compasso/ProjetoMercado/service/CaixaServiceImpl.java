@@ -49,7 +49,7 @@ public class CaixaServiceImpl implements CaixaService {
 		if (caixa.isPresent() == true) {
 			return mapper.map(caixa.get(), CaixaDto.class);
 		}
-		throw new RuntimeException("Cliente não encontrado");
+		throw new RuntimeException("Caixa não encontrado");
 	}
 
 	@Override
@@ -61,7 +61,7 @@ public class CaixaServiceImpl implements CaixaService {
 			Caixa c = this.caixaRepository.save(caixa.get());
 			return mapper.map(c, CaixaDto.class);
 		}
-		throw new RuntimeException("Cliente não encontrado");
+		throw new RuntimeException("Caixa não encontrado");
 	}
 
 	@Override
@@ -70,7 +70,7 @@ public class CaixaServiceImpl implements CaixaService {
 		if (caixa.isPresent() == true) {
 			this.caixaRepository.deleteById(id);
 		} else {
-			throw new RuntimeException("Cliente não encontrado");
+			throw new RuntimeException("Caixa não encontrado");
 		}
 	}
 }
