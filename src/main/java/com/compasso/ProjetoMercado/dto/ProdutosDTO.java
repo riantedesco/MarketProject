@@ -27,5 +27,5 @@ public class ProdutosDTO {
 
     private Long Marca;
 
-    private Long Setor
+    private Long Setor;
 }

@@ -26,7 +26,7 @@ public class ProdutosServiceImpl implements ProdutosService{
     public ProdutosDTO consultar(Long id) {
         Optional<Produtos> Produtos = this.repository.findById(id);
         if (Produtos.isPresent() == true) {
-            return mapper.map(Produtos.get(), ProdutosDTO].class);
+            return mapper.map(Produtos.get(), ProdutosDTO.class);
         }
         throw new RuntimeException("Produto não encontrado");
     }
