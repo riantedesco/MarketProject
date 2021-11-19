@@ -1,13 +1,11 @@
 package com.compasso.ProjetoMercado.dto;
 
+import com.compasso.ProjetoMercado.entity.option.tipoMercadoriaOption;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 
 @Data
@@ -21,7 +19,6 @@ public class MarcaDTO {
 
     private Long Nome;
 
-    //Fazer o enum
-    private Long tipoMercadoria;
-
+    @Enumerated(EnumType.STRING)
+    private tipoMercadoriaOption tipoMercadoria;
 }

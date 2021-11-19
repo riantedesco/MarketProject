@@ -1,11 +1,7 @@
-package com.compasso.ProjetoMercado.services;
+package com.compasso.ProjetoMercado.service;
 
-import com.compasso.ProjetoMercado.Entity.Marca;
-import com.compasso.ProjetoMercado.Entity.Produtos;
-import com.compasso.ProjetoMercado.Repository.MarcaRepository;
-import com.compasso.ProjetoMercado.Repository.ProdutosRepository;
-import com.compasso.ProjetoMercado.dto.MarcaDTO;
-import com.compasso.ProjetoMercado.dto.MarcaFormDTO;
+import com.compasso.ProjetoMercado.entity.Produtos;
+import com.compasso.ProjetoMercado.repository.ProdutosRepository;
 import com.compasso.ProjetoMercado.dto.ProdutosDTO;
 import com.compasso.ProjetoMercado.dto.ProdutosFormDTO;
 import org.modelmapper.ModelMapper;

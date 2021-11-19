@@ -1,6 +1,6 @@
-package com.compasso.ProjetoMercado.Repository;
+package com.compasso.ProjetoMercado.repository;
 
-import com.compasso.ProjetoMercado.Entity.Produtos;
+import com.compasso.ProjetoMercado.entity.Produtos;
 
 import java.util.Optional;
 

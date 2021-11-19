@@ -1,4 +1,4 @@
-package com.compasso.ProjetoMercado.Entity;
+package com.compasso.ProjetoMercado.entity;
 
 import lombok.Data;
 import lombok.Getter;
@@ -13,15 +13,11 @@ import javax.persistence.Id;
 @Entity
 @Getter
 @Setter
-public class Marca {
+public class Setor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Long Nome;
-
-    //Fazer o enum
-    private Long tipoMercadoria;
-
 }

@@ -1,4 +1,4 @@
-package com.compasso.ProjetoMercado.Entity;
+package com.compasso.ProjetoMercado.entity;
 
 import lombok.Data;
 import lombok.Getter;

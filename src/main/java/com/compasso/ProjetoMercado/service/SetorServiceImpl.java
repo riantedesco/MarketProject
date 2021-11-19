@@ -1,4 +1,4 @@
-package com.compasso.ProjetoMercado.services;
+package com.compasso.ProjetoMercado.service;
 
 public class SetorServiceImpl implements SetorService{
 }

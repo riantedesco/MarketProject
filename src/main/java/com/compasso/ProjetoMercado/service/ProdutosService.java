@@ -1,4 +1,4 @@
-package com.compasso.ProjetoMercado.services;
+package com.compasso.ProjetoMercado.service;
 
 import com.compasso.ProjetoMercado.dto.ProdutosDTO;
 import com.compasso.ProjetoMercado.dto.ProdutosFormDTO;

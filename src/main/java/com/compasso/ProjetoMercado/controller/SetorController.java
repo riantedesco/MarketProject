@@ -1,4 +1,4 @@
-package com.compasso.ProjetoMercado.controllers;
+package com.compasso.ProjetoMercado.controller;
 
 
 import org.springframework.web.bind.annotation.RequestMapping;
