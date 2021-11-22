@@ -43,6 +43,4 @@ public class MarcaServiceImpl implements MarcaService{
         Marca Marca = this.repository.findById(id).get();
         this.repository.delete(Marca);
     }
-
-
 }
