@@ -11,5 +11,9 @@ public class CaixaFormDto {
 
 	private Boolean ativo;
 	
+	private String descricao;
+	
+	private String senha;
+	
 	private Funcionario funcionario;
 }

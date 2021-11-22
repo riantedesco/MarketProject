@@ -13,5 +13,9 @@ public class CaixaDto {
 	
 	private Boolean ativo;
 	
+	private String descricao;
+	
+	private String senha;
+	
 	private Funcionario funcionario;
 }

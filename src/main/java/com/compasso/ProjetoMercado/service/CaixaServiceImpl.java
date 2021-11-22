@@ -57,6 +57,8 @@ public class CaixaServiceImpl implements CaixaService {
 		Optional<Caixa> caixa = this.caixaRepository.findById(id);
 		if (caixa.isPresent() == true) {
 			caixa.get().setAtivo(body.getAtivo());
+			caixa.get().setDescricao(body.getDescricao());
+			caixa.get().setSenha(body.getSenha());
 			caixa.get().setFuncionario(body.getFuncionario());
 			Caixa c = this.caixaRepository.save(caixa.get());
 			return mapper.map(c, CaixaDto.class);
