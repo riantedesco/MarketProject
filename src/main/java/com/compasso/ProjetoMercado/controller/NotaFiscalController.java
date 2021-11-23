@@ -29,7 +29,7 @@ public class NotaFiscalController {
 	
 	@PostMapping
 	@Transactional
-	public ResponseEntity<NotaFiscalDto> salvar(@RequestBody NotaFiscalFormDto body) {
+	public ResponseEntity<NotaFiscalDto> salvar(@RequestBody @Valid NotaFiscalFormDto body) {
 		return ResponseEntity.ok(this.notaFiscalService.salvar(body));
 	}
 	

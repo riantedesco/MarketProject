@@ -29,7 +29,7 @@ public class ItemNotaFiscalController {
 	
 	@PostMapping
 	@Transactional
-	public ResponseEntity<ItemNotaFiscalDto> salvar(@RequestBody ItemNotaFiscalFormDto body) {
+	public ResponseEntity<ItemNotaFiscalDto> salvar(@RequestBody @Valid ItemNotaFiscalFormDto body) {
 		return ResponseEntity.ok(this.itemNotaFiscalService.salvar(body));
 	}
 	

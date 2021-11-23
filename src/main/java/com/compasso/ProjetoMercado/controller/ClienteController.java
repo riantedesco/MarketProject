@@ -29,7 +29,7 @@ public class ClienteController {
 	
 	@PostMapping
 	@Transactional
-	public ResponseEntity<ClienteDto> salvar(@RequestBody ClienteFormDto body) {
+	public ResponseEntity<ClienteDto> salvar(@RequestBody @Valid ClienteFormDto body) {
 		return ResponseEntity.ok(this.clienteService.salvar(body));
 	}
 	
