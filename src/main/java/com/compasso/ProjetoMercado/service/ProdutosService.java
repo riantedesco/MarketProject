@@ -4,6 +4,8 @@ import com.compasso.ProjetoMercado.dto.ProdutosDTO;
 import com.compasso.ProjetoMercado.dto.ProdutosFormDTO;
 
 public interface ProdutosService {
+    ProdutosDTO salvar(ProdutosFormDTO body);
+
     ProdutosDTO consultar(Long id);
 
     ProdutosDTO atualizar(Long id, ProdutosFormDTO body);

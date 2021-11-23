@@ -6,8 +6,9 @@ import com.compasso.ProjetoMercado.dto.ProdutosDTO;
 import com.compasso.ProjetoMercado.dto.ProdutosFormDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import javax.validation.Validation;
 import java.util.Optional;
+
 
 public class ProdutosServiceImpl implements ProdutosService{
 
@@ -16,7 +17,18 @@ public class ProdutosServiceImpl implements ProdutosService{
 
     @Autowired
     private ModelMapper mapper;
+    private Validation validation;
+    private ProdutosRepository produtosRepository;
 
+
+    @Override
+    public ProdutosDTO salvar(ProdutosFormDTO body) {
+        Produtos produtos = mapper.map(body, Produtos.class);
+        validation.buildDefaultValidatorFactory();
+        new Produtos(produtos);
+        Produtos produtosResponse = this.produtosRepository.save(produtos);
+        return mapper.map(produtosResponse, ProdutosDTO.class);
+    }
 
     @Override
     public ProdutosDTO consultar(Long id) {

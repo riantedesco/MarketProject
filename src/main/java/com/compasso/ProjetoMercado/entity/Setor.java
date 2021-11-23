@@ -1,8 +1,8 @@
 package com.compasso.ProjetoMercado.entity;
 
+import com.compasso.ProjetoMercado.entity.option.nomeSetorOption;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,8 +11,7 @@ import javax.persistence.Id;
 
 @Data
 @Entity
-@Getter
-@Setter
+@NoArgsConstructor
 public class Setor {
 
     @Id
@@ -20,4 +19,19 @@ public class Setor {
     private Long id;
 
     private Long Nome;
+
+    public Setor(Setor setor) {
+
+    }
+
+    public static boolean isPresent() {
+        return false;
+    }
+
+    public static Object get() {
+        return null;
+    }
+
+    public void setNome(nomeSetorOption nome) {
+    }
 }

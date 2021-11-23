@@ -2,16 +2,13 @@ package com.compasso.ProjetoMercado.dto;
 
 import com.compasso.ProjetoMercado.entity.option.tipoMercadoriaOption;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-
+import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 
 @Data
 @Entity
-@Getter
-@Setter
+@NoArgsConstructor
 public class MarcaDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
