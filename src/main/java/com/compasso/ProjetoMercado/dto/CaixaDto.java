@@ -1,0 +1,21 @@
+package com.compasso.ProjetoMercado.dto;
+
+import com.compasso.ProjetoMercado.entity.Funcionario;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+public class CaixaDto {
+	
+	private Long id;
+	
+	private Boolean ativo;
+	
+	private String descricao;
+	
+	private String senha;
+	
+	private Funcionario funcionario;
+}
