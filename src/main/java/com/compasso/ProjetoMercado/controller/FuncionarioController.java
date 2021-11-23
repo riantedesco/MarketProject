@@ -29,7 +29,7 @@ public class FuncionarioController {
 	
 	@PostMapping
 	@Transactional
-	public ResponseEntity<FuncionarioDto> salvar(@RequestBody FuncionarioFormDto body) {
+	public ResponseEntity<FuncionarioDto> salvar(@RequestBody @Valid FuncionarioFormDto body) {
 		return ResponseEntity.ok(this.funcionarioService.salvar(body));
 	}
 	

@@ -29,7 +29,7 @@ public class CaixaController {
 	
 	@PostMapping
 	@Transactional
-	public ResponseEntity<CaixaDto> salvar(@RequestBody CaixaFormDto body) {
+	public ResponseEntity<CaixaDto> salvar(@RequestBody @Valid CaixaFormDto body) {
 		return ResponseEntity.ok(this.caixaService.salvar(body));
 	}
 	

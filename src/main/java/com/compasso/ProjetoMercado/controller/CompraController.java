@@ -29,7 +29,7 @@ public class CompraController {
 	
 	@PostMapping
 	@Transactional
-	public ResponseEntity<CompraDto> salvar(@RequestBody CompraFormDto body) {
+	public ResponseEntity<CompraDto> salvar(@RequestBody @Valid CompraFormDto body) {
 		return ResponseEntity.ok(this.compraService.salvar(body));
 	}
 	

@@ -1,4 +1,4 @@
-package com.compasso.ProjetoMercado.entity.option;
+package com.compasso.ProjetoMercado.constants;
 
 public enum SexoOption {
 	
