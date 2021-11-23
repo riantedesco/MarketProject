@@ -11,7 +11,7 @@ public interface SetorService {
 
     SetorDTO consultar(Long id);
 
-    Optional atualizar(Long id, SetorFormDTO body);
+    SetorDTO atualizar(Long id, SetorFormDTO body);
 
     void excluir(Long id);
 }

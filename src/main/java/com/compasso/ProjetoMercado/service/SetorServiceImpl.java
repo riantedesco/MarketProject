@@ -41,13 +41,13 @@ public class SetorServiceImpl implements SetorService{
     }
 
     @Override
-    public Optional atualizar(Long id, SetorFormDTO body) {
-        Optional<Setor> Setor = this.repository.findById(id);
-        if (Setor.isPresent()) {
-            Setor.get().setNome(body.getNome());
-            Setor St = this.repository.save(Setor.get());
+    public SetorDTO atualizar(Long id, SetorFormDTO body) {
+        Optional<Setor> setor = this.repository.findById(id);
+        if (setor.isPresent()) {
+            setor.get().setNome(body.getNome());
+            Setor st = this.repository.save(setor.get());
             Optional<Object> mapper = Optional.empty();
-            return mapper.map(St, SetorDTO.class);
+            return mapper.map(st, SetorDTO.class);
         }
         throw new RuntimeException("Setor não encontrado");
     }
