@@ -1,6 +1,6 @@
 package com.compasso.ProjetoMercado.dto;
 
-import com.compasso.ProjetoMercado.constants.nomeSetorOption;
+import com.compasso.ProjetoMercado.constants.NomeSetorOption;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SetorFormDto {
 	
-    private nomeSetorOption Nome;
+    private NomeSetorOption Nome;
 }

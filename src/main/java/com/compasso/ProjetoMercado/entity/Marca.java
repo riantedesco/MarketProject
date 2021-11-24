@@ -1,6 +1,6 @@
 package com.compasso.ProjetoMercado.entity;
 
-import com.compasso.ProjetoMercado.constants.tipoMercadoriaOption;
+import com.compasso.ProjetoMercado.constants.TipoMercadoriaOption;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -18,6 +18,6 @@ public class Marca {
     private String nome;
 
     @Enumerated(EnumType.STRING)
-    private tipoMercadoriaOption tipoMercadoria;
+    private TipoMercadoriaOption tipoMercadoria;
 
 }

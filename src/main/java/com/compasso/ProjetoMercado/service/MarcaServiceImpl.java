@@ -13,7 +13,7 @@ import com.compasso.ProjetoMercado.dto.MarcaDto;
 import com.compasso.ProjetoMercado.dto.MarcaFormDto;
 import com.compasso.ProjetoMercado.entity.Marca;
 import com.compasso.ProjetoMercado.repository.MarcaRepository;
-import com.compasso.ProjetoMercado.validation.Validation;
+import com.compasso.ProjetoMercado.validation.DadosNulosValidation;
 
 @Service
 public class MarcaServiceImpl implements MarcaService {
@@ -25,7 +25,7 @@ public class MarcaServiceImpl implements MarcaService {
     private ModelMapper mapper;
     
     @Autowired
-	private Validation validation;
+	private DadosNulosValidation validation;
     
     @Override
     public MarcaDto salvar(MarcaFormDto body) {

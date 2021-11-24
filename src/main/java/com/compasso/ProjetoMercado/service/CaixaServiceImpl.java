@@ -13,7 +13,7 @@ import com.compasso.ProjetoMercado.dto.CaixaDto;
 import com.compasso.ProjetoMercado.dto.CaixaFormDto;
 import com.compasso.ProjetoMercado.entity.Caixa;
 import com.compasso.ProjetoMercado.repository.CaixaRepository;
-import com.compasso.ProjetoMercado.validation.Validation;
+import com.compasso.ProjetoMercado.validation.DadosNulosValidation;
 
 @Service
 public class CaixaServiceImpl implements CaixaService {
@@ -25,7 +25,7 @@ public class CaixaServiceImpl implements CaixaService {
 	private ModelMapper mapper;
 	
 	@Autowired
-	private Validation validation;
+	private DadosNulosValidation validation;
 
 	@Override
 	public CaixaDto salvar(CaixaFormDto body) {

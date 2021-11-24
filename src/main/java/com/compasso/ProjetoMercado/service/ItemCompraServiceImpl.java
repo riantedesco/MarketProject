@@ -13,7 +13,7 @@ import com.compasso.ProjetoMercado.dto.ItemCompraDto;
 import com.compasso.ProjetoMercado.dto.ItemCompraFormDto;
 import com.compasso.ProjetoMercado.entity.ItemCompra;
 import com.compasso.ProjetoMercado.repository.ItemCompraRepository;
-import com.compasso.ProjetoMercado.validation.Validation;
+import com.compasso.ProjetoMercado.validation.DadosNulosValidation;
 
 @Service
 public class ItemCompraServiceImpl implements ItemCompraService {
@@ -25,7 +25,7 @@ public class ItemCompraServiceImpl implements ItemCompraService {
 	private ModelMapper mapper;
 	
 	@Autowired
-	private Validation validation;
+	private DadosNulosValidation validation;
 
 	@Override
 	public ItemCompraDto salvar(ItemCompraFormDto body) {

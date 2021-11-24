@@ -3,13 +3,9 @@ package com.compasso.ProjetoMercado.entity;
 import java.time.LocalDate;
 
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
-import com.compasso.ProjetoMercado.constants.SexoOption;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,6 +25,5 @@ public class Funcionario {
 
 	private LocalDate dataNascimento;
 
-	@Enumerated(EnumType.STRING)
-	private SexoOption sexo;
+	private String sexo;
 }

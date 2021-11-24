@@ -13,7 +13,7 @@ import com.compasso.ProjetoMercado.dto.FuncionarioDto;
 import com.compasso.ProjetoMercado.dto.FuncionarioFormDto;
 import com.compasso.ProjetoMercado.entity.Funcionario;
 import com.compasso.ProjetoMercado.repository.FuncionarioRepository;
-import com.compasso.ProjetoMercado.validation.Validation;
+import com.compasso.ProjetoMercado.validation.DadosNulosValidation;
 
 @Service
 public class FuncionarioServiceImpl implements FuncionarioService {
@@ -25,7 +25,7 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 	private ModelMapper mapper;
 	
 	@Autowired
-	private Validation validation;
+	private DadosNulosValidation validation;
 
 	@Override
 	public FuncionarioDto salvar(FuncionarioFormDto body) {

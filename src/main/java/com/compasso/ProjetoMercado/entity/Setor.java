@@ -1,6 +1,6 @@
 package com.compasso.ProjetoMercado.entity;
 
-import com.compasso.ProjetoMercado.constants.nomeSetorOption;
+import com.compasso.ProjetoMercado.constants.NomeSetorOption;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -19,6 +19,6 @@ public class Setor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private nomeSetorOption Nome;
+    private NomeSetorOption Nome;
 
 }

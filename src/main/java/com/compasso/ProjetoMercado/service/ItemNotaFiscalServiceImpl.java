@@ -13,7 +13,7 @@ import com.compasso.ProjetoMercado.dto.ItemNotaFiscalDto;
 import com.compasso.ProjetoMercado.dto.ItemNotaFiscalFormDto;
 import com.compasso.ProjetoMercado.entity.ItemNotaFiscal;
 import com.compasso.ProjetoMercado.repository.ItemNotaFiscalRepository;
-import com.compasso.ProjetoMercado.validation.Validation;
+import com.compasso.ProjetoMercado.validation.DadosNulosValidation;
 
 @Service
 public class ItemNotaFiscalServiceImpl implements ItemNotaFiscalService {
@@ -25,7 +25,7 @@ public class ItemNotaFiscalServiceImpl implements ItemNotaFiscalService {
 	private ModelMapper mapper;
 	
 	@Autowired
-	private Validation validation;
+	private DadosNulosValidation validation;
 
 	@Override
 	public ItemNotaFiscalDto salvar(ItemNotaFiscalFormDto body) {

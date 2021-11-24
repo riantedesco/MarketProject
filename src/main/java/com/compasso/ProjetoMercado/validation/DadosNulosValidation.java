@@ -15,7 +15,7 @@ import com.compasso.ProjetoMercado.entity.Setor;
 import com.compasso.ProjetoMercado.exception.ErroDadosNulosException;
 
 @Service
-public class Validation {
+public class DadosNulosValidation {
 	
 	public void validaCliente (Cliente cliente) {
 		if (cliente.getCpf() == null) {
@@ -107,7 +107,13 @@ public class Validation {
 	public void validaMarca (Marca marca) {
 	}
 	
-	public void validaProduto (Produtos produto) {
+	public void validaProduto (Produtos produtos) {
+		if (produtos.getSetor() == null) {
+			throw new ErroDadosNulosException("O produto deve possuir um setor");
+		}
+		if (produtos.getMarca() == null) {
+			throw new ErroDadosNulosException("O produto deve possuir uma marca");
+		}
 	}
 	
 	public void validaSetor (Setor setor) {

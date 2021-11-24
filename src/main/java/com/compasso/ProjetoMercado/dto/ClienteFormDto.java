@@ -2,8 +2,6 @@ package com.compasso.ProjetoMercado.dto;
 
 import java.time.LocalDate;
 
-import com.compasso.ProjetoMercado.constants.SexoOption;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -17,5 +15,5 @@ public class ClienteFormDto {
 
 	private LocalDate dataNascimento;
 
-	private SexoOption sexo;
+	private String sexo;
 }

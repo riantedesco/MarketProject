@@ -25,12 +25,12 @@ public class Produtos {
 
     private Long quantidade;
 
-    @NotEmpty(message = "O produto deve possuir uma Marca")
-    @NotNull(message = "O produto deve possuir uma Marca")
+    @NotEmpty(message = "O produto deve possuir uma marca")
+    @NotNull(message = "O produto deve possuir uma marca")
     private Marca Marca;
 
-    @NotEmpty(message = "O produto deve possuir um Setor Específico do Mercado")
-    @NotNull(message = "O produto deve possuir um Setor Específico do Mercado")
+    @NotEmpty(message = "O produto deve possuir um setor específico do mercado")
+    @NotNull(message = "O produto deve possuir um setor específico do mercado")
     private Setor Setor;
 
 }

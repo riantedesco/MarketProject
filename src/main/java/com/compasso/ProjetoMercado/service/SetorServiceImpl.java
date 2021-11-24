@@ -12,7 +12,7 @@ import com.compasso.ProjetoMercado.dto.SetorDto;
 import com.compasso.ProjetoMercado.dto.SetorFormDto;
 import com.compasso.ProjetoMercado.entity.Setor;
 import com.compasso.ProjetoMercado.repository.SetorRepository;
-import com.compasso.ProjetoMercado.validation.Validation;
+import com.compasso.ProjetoMercado.validation.DadosNulosValidation;
 
 public class SetorServiceImpl implements SetorService {
 
@@ -23,7 +23,7 @@ public class SetorServiceImpl implements SetorService {
     private ModelMapper mapper;
     
     @Autowired
-	private Validation validation;
+	private DadosNulosValidation validation;
 
     @Override
     public SetorDto salvar(SetorFormDto body) {

@@ -13,7 +13,7 @@ import com.compasso.ProjetoMercado.dto.ClienteDto;
 import com.compasso.ProjetoMercado.dto.ClienteFormDto;
 import com.compasso.ProjetoMercado.entity.Cliente;
 import com.compasso.ProjetoMercado.repository.ClienteRepository;
-import com.compasso.ProjetoMercado.validation.Validation;
+import com.compasso.ProjetoMercado.validation.DadosNulosValidation;
 
 @Service
 public class ClienteServiceImpl implements ClienteService {
@@ -25,7 +25,7 @@ public class ClienteServiceImpl implements ClienteService {
 	private ModelMapper mapper;
 	
 	@Autowired
-	private Validation validation;
+	private DadosNulosValidation validation;
 
 	@Override
 	public ClienteDto salvar(ClienteFormDto body) {

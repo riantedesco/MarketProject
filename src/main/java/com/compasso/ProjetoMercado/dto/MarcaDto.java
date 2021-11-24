@@ -1,6 +1,6 @@
 package com.compasso.ProjetoMercado.dto;
 
-import com.compasso.ProjetoMercado.constants.tipoMercadoriaOption;
+import com.compasso.ProjetoMercado.constants.TipoMercadoriaOption;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,5 +13,5 @@ public class MarcaDto {
 
     private String Nome;
 
-    private tipoMercadoriaOption tipoMercadoria;
+    private TipoMercadoriaOption tipoMercadoria;
 }
