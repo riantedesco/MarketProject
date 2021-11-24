@@ -8,7 +8,10 @@ import com.compasso.ProjetoMercado.entity.Compra;
 import com.compasso.ProjetoMercado.entity.Funcionario;
 import com.compasso.ProjetoMercado.entity.ItemCompra;
 import com.compasso.ProjetoMercado.entity.ItemNotaFiscal;
+import com.compasso.ProjetoMercado.entity.Marca;
 import com.compasso.ProjetoMercado.entity.NotaFiscal;
+import com.compasso.ProjetoMercado.entity.Produtos;
+import com.compasso.ProjetoMercado.entity.Setor;
 import com.compasso.ProjetoMercado.exception.ErroDadosNulosException;
 
 @Service
@@ -99,5 +102,14 @@ public class Validation {
 		if (itemNotaFiscal.getNotaFiscal() == null) {
 			throw new ErroDadosNulosException("A nota fiscal não pode ser nula");
 		}
+	}
+	
+	public void validaMarca (Marca marca) {
+	}
+	
+	public void validaProduto (Produtos produto) {
+	}
+	
+	public void validaSetor (Setor setor) {
 	}
 }
