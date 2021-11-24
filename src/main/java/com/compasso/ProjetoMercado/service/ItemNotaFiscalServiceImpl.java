@@ -30,6 +30,7 @@ public class ItemNotaFiscalServiceImpl implements ItemNotaFiscalService {
 	@Override
 	public ItemNotaFiscalDto salvar(ItemNotaFiscalFormDto body) {
 		ItemNotaFiscal itemNotaFiscal = mapper.map(body, ItemNotaFiscal.class);
+		itemNotaFiscal.setValorTotal(itemNotaFiscal.getQuantidade() * itemNotaFiscal.getProduto().getValor());
 		validation.validaItemNotaFiscal(itemNotaFiscal);
 		ItemNotaFiscal itemNotaFiscalResponse = this.itemNotaFiscalRepository.save(itemNotaFiscal);
 		return mapper.map(itemNotaFiscalResponse, ItemNotaFiscalDto.class);
@@ -58,6 +59,7 @@ public class ItemNotaFiscalServiceImpl implements ItemNotaFiscalService {
 		if (itemNotaFiscal.isPresent() == true) {
 			itemNotaFiscal.get().setQuantidade(body.getQuantidade());
 			itemNotaFiscal.get().setNotaFiscal(body.getNotaFiscal());
+			itemNotaFiscal.get().setProduto(body.getProduto());
 			ItemNotaFiscal i = this.itemNotaFiscalRepository.save(itemNotaFiscal.get());
 			return mapper.map(i, ItemNotaFiscalDto.class);
 		}

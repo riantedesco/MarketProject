@@ -11,12 +11,15 @@ import org.springframework.stereotype.Service;
 
 import com.compasso.ProjetoMercado.dto.NotaFiscalDto;
 import com.compasso.ProjetoMercado.dto.NotaFiscalFormDto;
+import com.compasso.ProjetoMercado.entity.ItemNotaFiscal;
 import com.compasso.ProjetoMercado.entity.NotaFiscal;
 import com.compasso.ProjetoMercado.repository.NotaFiscalRepository;
 import com.compasso.ProjetoMercado.validation.DadosNulosValidation;
 
 @Service
 public class NotaFiscalServiceImpl implements NotaFiscalService {
+	
+	private List<ItemNotaFiscal> itensNotaFiscal = new ArrayList<ItemNotaFiscal>();
 	
 	@Autowired
 	private NotaFiscalRepository notaFiscalRepository;
@@ -30,6 +33,9 @@ public class NotaFiscalServiceImpl implements NotaFiscalService {
 	@Override
 	public NotaFiscalDto salvar(NotaFiscalFormDto body) {
 		NotaFiscal notaFiscal = mapper.map(body, NotaFiscal.class);
+		for(ItemNotaFiscal i : itensNotaFiscal) {
+			notaFiscal.setValorTotal(notaFiscal.getValorTotal() + i.getValorTotal());
+		}
 		validation.validaNotaFiscal(notaFiscal);
 		NotaFiscal notaFiscalResponse = this.notaFiscalRepository.save(notaFiscal);
 		return mapper.map(notaFiscalResponse, NotaFiscalDto.class);

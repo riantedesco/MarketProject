@@ -1,14 +1,14 @@
 package com.compasso.ProjetoMercado.entity;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
@@ -21,7 +21,7 @@ public class Produtos {
 
     private String Nome;
 
-    private Double valor;
+    private Double valor = 0.00;
 
     private Long quantidade;
 

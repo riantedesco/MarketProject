@@ -25,7 +25,7 @@ public class NotaFiscal {
 	
 	private LocalDate dataHoraEntrada;
 	
-	private Double valorTotal;
+	private Double valorTotal = 0.00;
 
 	@OneToMany
     private List<ItemNotaFiscal> itemNotaFiscal;

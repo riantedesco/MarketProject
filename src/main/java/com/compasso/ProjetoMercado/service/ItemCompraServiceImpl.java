@@ -30,6 +30,7 @@ public class ItemCompraServiceImpl implements ItemCompraService {
 	@Override
 	public ItemCompraDto salvar(ItemCompraFormDto body) {
 		ItemCompra itemCompra = mapper.map(body, ItemCompra.class);
+		itemCompra.setValorTotal(itemCompra.getQuantidade() * itemCompra.getProduto().getValor());
 		validation.validaItemCompra(itemCompra);
 		ItemCompra itemCompraResponse = this.itemCompraRepository.save(itemCompra);
 		return mapper.map(itemCompraResponse, ItemCompraDto.class);
@@ -58,6 +59,7 @@ public class ItemCompraServiceImpl implements ItemCompraService {
 		if (itemCompra.isPresent() == true) {
 			itemCompra.get().setQuantidade(body.getQuantidade());
 			itemCompra.get().setCompra(body.getCompra());
+			itemCompra.get().setProduto(body.getProduto());
 			ItemCompra i = this.itemCompraRepository.save(itemCompra.get());
 			return mapper.map(i, ItemCompraDto.class);
 		}

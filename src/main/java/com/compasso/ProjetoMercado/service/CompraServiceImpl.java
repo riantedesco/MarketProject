@@ -12,11 +12,14 @@ import org.springframework.stereotype.Service;
 import com.compasso.ProjetoMercado.dto.CompraDto;
 import com.compasso.ProjetoMercado.dto.CompraFormDto;
 import com.compasso.ProjetoMercado.entity.Compra;
+import com.compasso.ProjetoMercado.entity.ItemCompra;
 import com.compasso.ProjetoMercado.repository.CompraRepository;
 import com.compasso.ProjetoMercado.validation.DadosNulosValidation;
 
 @Service
 public class CompraServiceImpl implements CompraService {
+	
+	private List<ItemCompra> itensCompra = new ArrayList<ItemCompra>();
 	
 	@Autowired
 	private CompraRepository compraRepository;
@@ -30,6 +33,9 @@ public class CompraServiceImpl implements CompraService {
 	@Override
 	public CompraDto salvar(CompraFormDto body) {
 		Compra compra = mapper.map(body, Compra.class);
+		for(ItemCompra i : itensCompra) {
+			compra.setValorTotal(compra.getValorTotal() + i.getValorTotal());
+		}
 		validation.validaCompra(compra);
 		Compra compraResponse = this.compraRepository.save(compra);
 		return mapper.map(compraResponse, CompraDto.class);
@@ -74,4 +80,5 @@ public class CompraServiceImpl implements CompraService {
 			throw new RuntimeException("Compra não encontrada");
 		}
 	}
+	
 }

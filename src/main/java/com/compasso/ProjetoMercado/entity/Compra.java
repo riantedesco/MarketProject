@@ -23,7 +23,7 @@ public class Compra {
 	
 	private LocalDate dataHora;
 	
-	private Double valorTotal;
+	private Double valorTotal = 0.00;
 	
 	private Cliente cliente;
 	
