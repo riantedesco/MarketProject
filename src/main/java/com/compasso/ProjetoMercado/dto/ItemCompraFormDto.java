@@ -1,8 +1,5 @@
 package com.compasso.ProjetoMercado.dto;
 
-import com.compasso.ProjetoMercado.entity.Compra;
-import com.compasso.ProjetoMercado.entity.Produtos;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,7 +9,7 @@ public class ItemCompraFormDto {
 	
 	private Integer quantidade;
 	
-	private Compra compra;
+	private Long idCompra;
 	
-	private Produtos produto;
+	private Long idProduto;
 }

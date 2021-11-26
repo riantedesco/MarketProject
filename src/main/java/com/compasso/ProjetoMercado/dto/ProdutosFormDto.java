@@ -1,9 +1,6 @@
 package com.compasso.ProjetoMercado.dto;
 
 
-import com.compasso.ProjetoMercado.entity.Marca;
-import com.compasso.ProjetoMercado.entity.Setor;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,7 +12,7 @@ public class ProdutosFormDto {
 
     private Double valor;
 
-    private Marca marca;
+    private Long idMarca;
 
-    private Setor setor;
+    private Long idSetor;
 }

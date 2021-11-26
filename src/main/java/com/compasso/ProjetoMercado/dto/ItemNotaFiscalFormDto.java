@@ -1,8 +1,5 @@
 package com.compasso.ProjetoMercado.dto;
 
-import com.compasso.ProjetoMercado.entity.NotaFiscal;
-import com.compasso.ProjetoMercado.entity.Produtos;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,7 +9,7 @@ public class ItemNotaFiscalFormDto {
 	
 	private Integer quantidade;
 	
-	private NotaFiscal notaFiscal;
+	private Long idNotaFiscal;
 	
-	private Produtos produto;
+	private Long idProduto;
 }

@@ -11,8 +11,13 @@ import org.springframework.stereotype.Service;
 
 import com.compasso.ProjetoMercado.dto.CompraDto;
 import com.compasso.ProjetoMercado.dto.CompraFormDto;
+import com.compasso.ProjetoMercado.entity.Caixa;
+import com.compasso.ProjetoMercado.entity.Cliente;
 import com.compasso.ProjetoMercado.entity.Compra;
 import com.compasso.ProjetoMercado.entity.ItemCompra;
+import com.compasso.ProjetoMercado.exception.ErroChaveEstrangeiraException;
+import com.compasso.ProjetoMercado.repository.CaixaRepository;
+import com.compasso.ProjetoMercado.repository.ClienteRepository;
 import com.compasso.ProjetoMercado.repository.CompraRepository;
 import com.compasso.ProjetoMercado.repository.ItemCompraRepository;
 import com.compasso.ProjetoMercado.validation.DadosNulosValidation;
@@ -26,6 +31,12 @@ public class CompraServiceImpl implements CompraService {
 	private CompraRepository compraRepository;
 	
 	@Autowired
+	private CaixaRepository caixaRepository;
+	
+	@Autowired
+	private ClienteRepository clienteRepository;
+	
+	@Autowired
 	private ItemCompraRepository itemCompraRepository;
 
 	@Autowired
@@ -37,10 +48,30 @@ public class CompraServiceImpl implements CompraService {
 	@Override
 	public CompraDto salvar(CompraFormDto body) {
 		Compra compra = mapper.map(body, Compra.class);
+		
+		if (body.getIdCaixa() != null) {
+			Optional<Caixa> caixa = this.caixaRepository.findById(body.getIdCaixa());
+			if (caixa.isPresent() == true) {
+				compra.setCaixa(caixa.get());
+			} else {
+				throw new ErroChaveEstrangeiraException("Caixa não encontrado");
+			}
+		}
+		
+		if (body.getIdCliente() != null) {
+			Optional<Cliente> cliente = this.clienteRepository.findById(body.getIdCliente());
+			if (cliente.isPresent() == true) {
+				compra.setCliente(cliente.get());
+			} else {
+				throw new ErroChaveEstrangeiraException("Cliente não encontrado");
+			}
+		}
+		
 		for(ItemCompra i : itensCompra) {
 			compra.setValorTotal(compra.getValorTotal() + i.getValorTotal());
 			this.itemCompraRepository.save(i);
 		}
+		
 		validation.validaCompra(compra);
 		Compra compraResponse = this.compraRepository.save(compra);
 		return mapper.map(compraResponse, CompraDto.class);
@@ -66,10 +97,20 @@ public class CompraServiceImpl implements CompraService {
 	@Override
 	public CompraDto atualizar(Long id, CompraFormDto body) {
 		Optional<Compra> compra = this.compraRepository.findById(id);
+		Optional<Caixa> caixa = this.caixaRepository.findById(body.getIdCaixa());
+		Optional<Cliente> cliente = this.clienteRepository.findById(body.getIdCliente());
 		if (compra.isPresent() == true) {
 			compra.get().setDataHora(body.getDataHora());
-			compra.get().setCliente(body.getCliente());
-			compra.get().setCaixa(body.getCaixa());
+			if (caixa.isPresent() == true) {
+    			compra.get().setCaixa(caixa.get());
+    		} else {
+    			throw new ErroChaveEstrangeiraException("Caixa não encontrado");
+    		}
+            if (cliente.isPresent() == true) {
+    			compra.get().setCliente(cliente.get());
+    		} else {
+    			throw new ErroChaveEstrangeiraException("Cliente não encontrado");
+    		}
 			Compra c = this.compraRepository.save(compra.get());
 			return mapper.map(c, CompraDto.class);
 		}
