@@ -11,7 +11,7 @@ public class MarcaDto {
 
     private Long id;
 
-    private String Nome;
+    private String nome;
 
     private TipoMercadoriaOption tipoMercadoria;
 }

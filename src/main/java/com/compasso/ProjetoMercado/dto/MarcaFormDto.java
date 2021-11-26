@@ -1,16 +1,15 @@
 package com.compasso.ProjetoMercado.dto;
 
-import javax.persistence.Entity;
-
 import com.compasso.ProjetoMercado.constants.TipoMercadoriaOption;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-@Entity
+@NoArgsConstructor
 public class MarcaFormDto {
 	
-    private String Nome;
+    private String nome;
 
     private TipoMercadoriaOption tipoMercadoria;
 }

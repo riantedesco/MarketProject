@@ -7,15 +7,23 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.compasso.ProjetoMercado.dto.ProdutosDto;
 import com.compasso.ProjetoMercado.dto.ProdutosFormDto;
+import com.compasso.ProjetoMercado.entity.ItemCompra;
+import com.compasso.ProjetoMercado.entity.ItemNotaFiscal;
 import com.compasso.ProjetoMercado.entity.Produtos;
 import com.compasso.ProjetoMercado.repository.ProdutosRepository;
 import com.compasso.ProjetoMercado.validation.DadosNulosValidation;
 
+@Service
 public class ProdutosServiceImpl implements ProdutosService {
 
+	private List<ItemNotaFiscal> itensNotaFiscal = new ArrayList<ItemNotaFiscal>();
+	
+	private List<ItemCompra> itensCompra = new ArrayList<ItemCompra>();
+	
 	@Autowired
 	private ProdutosRepository produtosRepository;
 	
@@ -28,6 +36,12 @@ public class ProdutosServiceImpl implements ProdutosService {
     @Override
     public ProdutosDto salvar(ProdutosFormDto body) {
         Produtos produtos = mapper.map(body, Produtos.class);
+        for(ItemNotaFiscal inf : itensNotaFiscal) {
+			produtos.setQuantidade(produtos.getQuantidade() + inf.getQuantidade());
+		}
+        for(ItemCompra icp : itensCompra) {
+        	produtos.setQuantidade(produtos.getQuantidade() - icp.getQuantidade());
+        }
         validation.validaProduto(produtos);
         Produtos produtosResponse = this.produtosRepository.save(produtos);
         return mapper.map(produtosResponse, ProdutosDto.class);
@@ -57,7 +71,6 @@ public class ProdutosServiceImpl implements ProdutosService {
         if (produtos.isPresent() == true) {
             produtos.get().setNome(body.getNome());
             produtos.get().setValor(body.getValor());
-            produtos.get().setQuantidade(body.getQuantidade());
             produtos.get().setMarca(body.getMarca());
             produtos.get().setSetor(body.getSetor());
             Produtos pt = this.produtosRepository.save(produtos.get());

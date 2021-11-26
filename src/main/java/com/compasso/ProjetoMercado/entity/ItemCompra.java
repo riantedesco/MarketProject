@@ -18,12 +18,13 @@ public class ItemCompra {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long numero;
 	
-	private Long quantidade;
+	private Integer quantidade;
 	
 	private Double valorTotal = 0.00;
 	
 	@ManyToOne
 	private Compra compra;
 	
+	@ManyToOne
 	private Produtos produto;
 }

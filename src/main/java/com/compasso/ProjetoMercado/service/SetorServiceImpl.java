@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.compasso.ProjetoMercado.dto.SetorDto;
 import com.compasso.ProjetoMercado.dto.SetorFormDto;
@@ -14,6 +15,7 @@ import com.compasso.ProjetoMercado.entity.Setor;
 import com.compasso.ProjetoMercado.repository.SetorRepository;
 import com.compasso.ProjetoMercado.validation.DadosNulosValidation;
 
+@Service
 public class SetorServiceImpl implements SetorService {
 
 	@Autowired

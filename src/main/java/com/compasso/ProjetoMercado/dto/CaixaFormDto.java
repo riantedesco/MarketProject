@@ -8,8 +8,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class CaixaFormDto {
-
-	private Boolean ativo;
 	
 	private String descricao;
 	

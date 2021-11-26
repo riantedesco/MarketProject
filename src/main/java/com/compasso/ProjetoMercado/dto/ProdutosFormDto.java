@@ -11,13 +11,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ProdutosFormDto {
 
-    private String Nome;
+    private String nome;
 
     private Double valor;
 
-    private Long quantidade;
+    private Marca marca;
 
-    private Marca Marca;
-
-    private Setor Setor;
+    private Setor setor;
 }

@@ -12,13 +12,13 @@ public class ProdutosDto {
 
     private Long id;
 
-    private String Nome;
+    private String nome;
 
     private Double valor;
 
-    private Long quantidade;
+    private Integer quantidade;
 
-    private Marca Marca;
+    private Marca marca;
 
-    private Setor Setor;
+    private Setor setor;
 }

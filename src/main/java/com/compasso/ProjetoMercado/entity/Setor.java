@@ -19,6 +19,6 @@ public class Setor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private NomeSetorOption Nome;
+    private NomeSetorOption nome;
 
 }

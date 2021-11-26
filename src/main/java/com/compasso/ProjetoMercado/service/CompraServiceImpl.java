@@ -14,6 +14,7 @@ import com.compasso.ProjetoMercado.dto.CompraFormDto;
 import com.compasso.ProjetoMercado.entity.Compra;
 import com.compasso.ProjetoMercado.entity.ItemCompra;
 import com.compasso.ProjetoMercado.repository.CompraRepository;
+import com.compasso.ProjetoMercado.repository.ItemCompraRepository;
 import com.compasso.ProjetoMercado.validation.DadosNulosValidation;
 
 @Service
@@ -23,6 +24,9 @@ public class CompraServiceImpl implements CompraService {
 	
 	@Autowired
 	private CompraRepository compraRepository;
+	
+	@Autowired
+	private ItemCompraRepository itemCompraRepository;
 
 	@Autowired
 	private ModelMapper mapper;
@@ -35,6 +39,7 @@ public class CompraServiceImpl implements CompraService {
 		Compra compra = mapper.map(body, Compra.class);
 		for(ItemCompra i : itensCompra) {
 			compra.setValorTotal(compra.getValorTotal() + i.getValorTotal());
+			this.itemCompraRepository.save(i);
 		}
 		validation.validaCompra(compra);
 		Compra compraResponse = this.compraRepository.save(compra);

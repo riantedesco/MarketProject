@@ -9,10 +9,14 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.compasso.ProjetoMercado.dto.AssociaFuncionarioFormDto;
 import com.compasso.ProjetoMercado.dto.CaixaDto;
 import com.compasso.ProjetoMercado.dto.CaixaFormDto;
+import com.compasso.ProjetoMercado.dto.DesassociaFuncionarioFormDto;
 import com.compasso.ProjetoMercado.entity.Caixa;
+import com.compasso.ProjetoMercado.entity.Funcionario;
 import com.compasso.ProjetoMercado.repository.CaixaRepository;
+import com.compasso.ProjetoMercado.repository.FuncionarioRepository;
 import com.compasso.ProjetoMercado.validation.DadosNulosValidation;
 
 @Service
@@ -20,6 +24,9 @@ public class CaixaServiceImpl implements CaixaService {
 	
 	@Autowired
 	private CaixaRepository caixaRepository;
+	
+	@Autowired
+	private FuncionarioRepository funcionarioRepository;
 
 	@Autowired
 	private ModelMapper mapper;
@@ -33,6 +40,31 @@ public class CaixaServiceImpl implements CaixaService {
 		validation.validaCaixa(caixa);
 		Caixa caixaResponse = this.caixaRepository.save(caixa);
 		return mapper.map(caixaResponse, CaixaDto.class);
+	}
+	
+	@Override
+	public CaixaDto associarFuncionario(AssociaFuncionarioFormDto body) {
+		Optional<Caixa> caixa = this.caixaRepository.findById(body.getIdCaixa());
+		Optional<Funcionario> funcionario = this.funcionarioRepository.findById(body.getIdFuncionario());
+		if (caixa.isPresent() && funcionario.isPresent() == true) {
+			caixa.get().setFuncionario(funcionario.get());
+			caixa.get().setAtivo(true);
+			Caixa c = this.caixaRepository.save(caixa.get());
+			return mapper.map(c, CaixaDto.class);
+		}
+		throw new RuntimeException("Caixa não encontrado");
+	}
+	
+	@Override
+	public CaixaDto desassociarFuncionario(DesassociaFuncionarioFormDto body) {
+		Optional<Caixa> caixa = this.caixaRepository.findById(body.getIdCaixa());
+		if (caixa.isPresent() == true) {
+			caixa.get().setFuncionario(null);
+			caixa.get().setAtivo(false);
+			Caixa c = this.caixaRepository.save(caixa.get());
+			return mapper.map(c, CaixaDto.class);
+		}
+		throw new RuntimeException("Caixa não encontrado");
 	}
 
 	@Override
@@ -56,7 +88,6 @@ public class CaixaServiceImpl implements CaixaService {
 	public CaixaDto atualizar(Long id, CaixaFormDto body) {
 		Optional<Caixa> caixa = this.caixaRepository.findById(id);
 		if (caixa.isPresent() == true) {
-			caixa.get().setAtivo(body.getAtivo());
 			caixa.get().setDescricao(body.getDescricao());
 			caixa.get().setSenha(body.getSenha());
 			caixa.get().setFuncionario(body.getFuncionario());

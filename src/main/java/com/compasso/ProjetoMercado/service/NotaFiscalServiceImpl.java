@@ -13,6 +13,7 @@ import com.compasso.ProjetoMercado.dto.NotaFiscalDto;
 import com.compasso.ProjetoMercado.dto.NotaFiscalFormDto;
 import com.compasso.ProjetoMercado.entity.ItemNotaFiscal;
 import com.compasso.ProjetoMercado.entity.NotaFiscal;
+import com.compasso.ProjetoMercado.repository.ItemNotaFiscalRepository;
 import com.compasso.ProjetoMercado.repository.NotaFiscalRepository;
 import com.compasso.ProjetoMercado.validation.DadosNulosValidation;
 
@@ -23,6 +24,9 @@ public class NotaFiscalServiceImpl implements NotaFiscalService {
 	
 	@Autowired
 	private NotaFiscalRepository notaFiscalRepository;
+	
+	@Autowired
+	private ItemNotaFiscalRepository itemNotaFiscalRepository;
 
 	@Autowired
 	private ModelMapper mapper;
@@ -35,6 +39,7 @@ public class NotaFiscalServiceImpl implements NotaFiscalService {
 		NotaFiscal notaFiscal = mapper.map(body, NotaFiscal.class);
 		for(ItemNotaFiscal i : itensNotaFiscal) {
 			notaFiscal.setValorTotal(notaFiscal.getValorTotal() + i.getValorTotal());
+			this.itemNotaFiscalRepository.save(i);
 		}
 		validation.validaNotaFiscal(notaFiscal);
 		NotaFiscal notaFiscalResponse = this.notaFiscalRepository.save(notaFiscal);

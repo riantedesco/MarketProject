@@ -48,9 +48,11 @@ public class DadosNulosValidation {
 	}
 	
 	public void validaCaixa (Caixa caixa) {
-		if (caixa.getAtivo() == null) {
+		if (caixa.getFuncionario() == null) {
 			caixa.setAtivo(false);
-		} 
+		} else {
+			caixa.setAtivo(true);
+		}
 	}
 	
 	public void validaCompra (Compra compra) {
@@ -90,6 +92,9 @@ public class DadosNulosValidation {
 	    if (notaFiscal.getValorTotal() == null) {
 			throw new ErroDadosNulosException("O valor total não pode ser nulo");
 		}
+	    if (notaFiscal.getItemNotaFiscal() == null) {
+	    	throw new ErroDadosNulosException("A nota deve possuir pelo menos um item");
+	    }
 	}
 	
 	public void validaItemNotaFiscal (ItemNotaFiscal itemNotaFiscal) {
@@ -105,6 +110,12 @@ public class DadosNulosValidation {
 	}
 	
 	public void validaMarca (Marca marca) {
+		if (marca.getNome() == null) {
+			throw new ErroDadosNulosException("A marca deve possuir um nome");
+		}
+		if (marca.getTipoMercadoria() == null) {
+			throw new ErroDadosNulosException("A marca deve possuir um tipo de mercadoria");
+		}
 	}
 	
 	public void validaProduto (Produtos produtos) {
@@ -117,5 +128,8 @@ public class DadosNulosValidation {
 	}
 	
 	public void validaSetor (Setor setor) {
+		if (setor.getNome() == null) {
+			throw new ErroDadosNulosException("O setor deve possuir um nome");
+		}
 	}
 }
