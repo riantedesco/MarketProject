@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.compasso.ProjetoMercado.entity.Cliente;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,8 @@ import com.compasso.ProjetoMercado.repository.ClienteRepository;
 import com.compasso.ProjetoMercado.repository.CompraRepository;
 import com.compasso.ProjetoMercado.repository.ItemCompraRepository;
 import com.compasso.ProjetoMercado.validation.DadosNulosValidation;
+
+import javax.validation.constraints.NotNull;
 
 @Service
 public class CompraServiceImpl implements CompraService {
@@ -64,6 +67,16 @@ public class CompraServiceImpl implements CompraService {
 				compra.setCliente(cliente.get());
 			} else {
 				throw new ErroChaveEstrangeiraException("Cliente não encontrado");
+			}
+		}
+		// Cálculo Desconto 5%
+		if (body.getIdCliente() != null) {
+			Optional<Cliente> cliente = this.clienteRepository.findById(body.getIdCliente());
+			if(cliente.isPresent() == true) {
+				compra.setCliente(cliente.get());
+				compra.setValorTotal(compra.getValorTotal() - compra.getValorTotal() + (compra.getValorTotal() * 0.05));
+			} else {
+				throw new ErroChaveEstrangeiraException("Cliente não Encontrado");
 			}
 		}
 		
@@ -126,5 +139,4 @@ public class CompraServiceImpl implements CompraService {
 			throw new RuntimeException("Compra não encontrada");
 		}
 	}
-	
 }
