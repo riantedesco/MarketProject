@@ -74,7 +74,7 @@ public class CompraServiceImpl implements CompraService {
 			Optional<Cliente> cliente = this.clienteRepository.findById(body.getIdCliente());
 			if(cliente.isPresent() == true) {
 				compra.setCliente(cliente.get());
-				compra.setValorTotal(compra.getValorTotal() - compra.getValorTotal() + (compra.getValorTotal() * 0.05));
+				compra.setValorTotal(compra.getValorTotal() - (compra.getValorTotal() * 0.05));
 			} else {
 				throw new ErroChaveEstrangeiraException("Cliente não Encontrado");
 			}
