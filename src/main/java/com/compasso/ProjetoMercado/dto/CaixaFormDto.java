@@ -10,6 +10,4 @@ public class CaixaFormDto {
 	private String descricao;
 	
 	private String senha;
-	
-	private Long idFuncionario;
 }

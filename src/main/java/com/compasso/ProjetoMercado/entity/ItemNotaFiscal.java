@@ -20,10 +20,7 @@ public class ItemNotaFiscal {
 	
 	private Integer quantidade;
 	
-	private Double valorTotal = 0.00;
-	
-	@ManyToOne
-	private NotaFiscal notaFiscal;
+	private Double valorTotal;
 	
 	@ManyToOne
 	private Produtos produto;

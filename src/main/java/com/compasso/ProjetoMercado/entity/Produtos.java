@@ -21,7 +21,7 @@ public class Produtos {
 
     private String nome;
 
-    private Double valor = 0.00;
+    private Double valor;
 
     private Integer quantidade = 0;
 

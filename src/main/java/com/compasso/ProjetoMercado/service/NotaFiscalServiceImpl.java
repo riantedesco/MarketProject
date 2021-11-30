@@ -9,24 +9,29 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.compasso.ProjetoMercado.dto.ItemNotaFiscalFormDto;
 import com.compasso.ProjetoMercado.dto.NotaFiscalDto;
 import com.compasso.ProjetoMercado.dto.NotaFiscalFormDto;
 import com.compasso.ProjetoMercado.entity.ItemNotaFiscal;
 import com.compasso.ProjetoMercado.entity.NotaFiscal;
+import com.compasso.ProjetoMercado.entity.Produtos;
+import com.compasso.ProjetoMercado.exception.ErroChaveEstrangeiraException;
 import com.compasso.ProjetoMercado.repository.ItemNotaFiscalRepository;
 import com.compasso.ProjetoMercado.repository.NotaFiscalRepository;
+import com.compasso.ProjetoMercado.repository.ProdutosRepository;
 import com.compasso.ProjetoMercado.validation.DadosNulosValidation;
 
 @Service
 public class NotaFiscalServiceImpl implements NotaFiscalService {
-	
-	private List<ItemNotaFiscal> itensNotaFiscal = new ArrayList<ItemNotaFiscal>();
 	
 	@Autowired
 	private NotaFiscalRepository notaFiscalRepository;
 	
 	@Autowired
 	private ItemNotaFiscalRepository itemNotaFiscalRepository;
+	
+	@Autowired
+	private ProdutosRepository produtosRepository;
 
 	@Autowired
 	private ModelMapper mapper;
@@ -36,11 +41,34 @@ public class NotaFiscalServiceImpl implements NotaFiscalService {
 
 	@Override
 	public NotaFiscalDto salvar(NotaFiscalFormDto body) {
+//		NotaFiscal notaFiscal = new NotaFiscal();
 		NotaFiscal notaFiscal = mapper.map(body, NotaFiscal.class);
-		for(ItemNotaFiscal i : itensNotaFiscal) {
-			notaFiscal.setValorTotal(notaFiscal.getValorTotal() + i.getValorTotal());
-			this.itemNotaFiscalRepository.save(i);
+		ItemNotaFiscal itemNotaFiscal = mapper.map(body.getItemNotaFiscal(), ItemNotaFiscal.class);
+		List<ItemNotaFiscalFormDto> listItemNotaFiscal = body.getItemNotaFiscal();
+
+//		System.out.println(listItemNotaFiscal.size());
+		
+		for(ItemNotaFiscalFormDto i : listItemNotaFiscal) {
+//			ItemNotaFiscal itemNotaFiscal = new ItemNotaFiscal();
+			if (i.getIdProduto() != null) {
+			    Optional<Produtos> produto = this.produtosRepository.findById(i.getIdProduto());
+				if (produto.isPresent() == true) {
+					itemNotaFiscal.setProduto(produto.get());
+					
+					produto.get().setQuantidade(produto.get().getQuantidade() + i.getQuantidade());
+					itemNotaFiscal.setQuantidade(i.getQuantidade());
+					itemNotaFiscal.setValorTotal(i.getQuantidade() * itemNotaFiscal.getProduto().getValor());
+		
+					validation.validaItemNotaFiscal(itemNotaFiscal);
+					this.itemNotaFiscalRepository.save(itemNotaFiscal);
+					
+					notaFiscal.setValorTotal(notaFiscal.getValorTotal() + itemNotaFiscal.getValorTotal());
+				} else {
+					throw new ErroChaveEstrangeiraException("Produto não encontrado");
+				}
+		    }
 		}
+		
 		validation.validaNotaFiscal(notaFiscal);
 		NotaFiscal notaFiscalResponse = this.notaFiscalRepository.save(notaFiscal);
 		return mapper.map(notaFiscalResponse, NotaFiscalDto.class);

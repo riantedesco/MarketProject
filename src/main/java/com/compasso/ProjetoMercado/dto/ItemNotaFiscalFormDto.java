@@ -9,7 +9,5 @@ public class ItemNotaFiscalFormDto {
 	
 	private Integer quantidade;
 	
-	private Long idNotaFiscal;
-	
 	private Long idProduto;
 }

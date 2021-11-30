@@ -11,21 +11,24 @@ import org.springframework.stereotype.Service;
 
 import com.compasso.ProjetoMercado.dto.CompraDto;
 import com.compasso.ProjetoMercado.dto.CompraFormDto;
+import com.compasso.ProjetoMercado.dto.ItemCompraFormDto;
 import com.compasso.ProjetoMercado.entity.Caixa;
 import com.compasso.ProjetoMercado.entity.Cliente;
 import com.compasso.ProjetoMercado.entity.Compra;
 import com.compasso.ProjetoMercado.entity.ItemCompra;
+import com.compasso.ProjetoMercado.entity.Produtos;
+import com.compasso.ProjetoMercado.exception.ErroCaixaInativoException;
 import com.compasso.ProjetoMercado.exception.ErroChaveEstrangeiraException;
+import com.compasso.ProjetoMercado.exception.ErroEstqInsuficienteException;
 import com.compasso.ProjetoMercado.repository.CaixaRepository;
 import com.compasso.ProjetoMercado.repository.ClienteRepository;
 import com.compasso.ProjetoMercado.repository.CompraRepository;
 import com.compasso.ProjetoMercado.repository.ItemCompraRepository;
+import com.compasso.ProjetoMercado.repository.ProdutosRepository;
 import com.compasso.ProjetoMercado.validation.DadosNulosValidation;
 
 @Service
 public class CompraServiceImpl implements CompraService {
-	
-	private List<ItemCompra> itensCompra = new ArrayList<ItemCompra>();
 	
 	@Autowired
 	private CompraRepository compraRepository;
@@ -38,6 +41,9 @@ public class CompraServiceImpl implements CompraService {
 	
 	@Autowired
 	private ItemCompraRepository itemCompraRepository;
+	
+	@Autowired
+	private ProdutosRepository produtosRepository;
 
 	@Autowired
 	private ModelMapper mapper;
@@ -47,12 +53,48 @@ public class CompraServiceImpl implements CompraService {
 
 	@Override
 	public CompraDto salvar(CompraFormDto body) {
+//		NotaFiscal notaFiscal = new NotaFiscal();
 		Compra compra = mapper.map(body, Compra.class);
+		ItemCompra itemCompra = mapper.map(body.getItemCompra(), ItemCompra.class);
+		List<ItemCompraFormDto> listItemCompra = body.getItemCompra();
+
+//		System.out.println(listItemCompra.size());
+		
+		for(ItemCompraFormDto i : listItemCompra) {
+//			ItemNotaFiscal itemNotaFiscal = new ItemNotaFiscal();
+			if (i.getIdProduto() != null) {
+			    Optional<Produtos> produto = this.produtosRepository.findById(i.getIdProduto());
+				if (produto.isPresent() == true) {
+					itemCompra.setProduto(produto.get());
+					
+					if (produto.get().getQuantidade() >= i.getQuantidade()) {
+						produto.get().setQuantidade(produto.get().getQuantidade() - i.getQuantidade());
+					} else {
+						throw new ErroEstqInsuficienteException("O produto " + produto.get().getNome() +
+								" não possui quantidade suficiente em estoque para realizar a compra");
+					}
+					
+					itemCompra.setQuantidade(i.getQuantidade());
+					itemCompra.setValorTotal(i.getQuantidade() * itemCompra.getProduto().getValor());
+		
+					validation.validaItemCompra(itemCompra);
+					this.itemCompraRepository.save(itemCompra);
+					
+					compra.setValorTotal(compra.getValorTotal() + itemCompra.getValorTotal());
+				} else {
+					throw new ErroChaveEstrangeiraException("Produto não encontrado");
+				}
+		    }
+		}
 		
 		if (body.getIdCaixa() != null) {
 			Optional<Caixa> caixa = this.caixaRepository.findById(body.getIdCaixa());
 			if (caixa.isPresent() == true) {
-				compra.setCaixa(caixa.get());
+				if (caixa.get().getAtivo() == true) {
+					compra.setCaixa(caixa.get());
+				} else {
+					throw new ErroCaixaInativoException("O caixa informado está inativo");
+				}
 			} else {
 				throw new ErroChaveEstrangeiraException("Caixa não encontrado");
 			}
@@ -65,11 +107,6 @@ public class CompraServiceImpl implements CompraService {
 			} else {
 				throw new ErroChaveEstrangeiraException("Cliente não encontrado");
 			}
-		}
-		
-		for(ItemCompra i : itensCompra) {
-			compra.setValorTotal(compra.getValorTotal() + i.getValorTotal());
-			this.itemCompraRepository.save(i);
 		}
 		
 		validation.validaCompra(compra);

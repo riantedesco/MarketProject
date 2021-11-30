@@ -20,10 +20,7 @@ public class ItemCompra {
 	
 	private Integer quantidade;
 	
-	private Double valorTotal = 0.00;
-	
-	@ManyToOne
-	private Compra compra;
+	private Double valorTotal;
 	
 	@ManyToOne
 	private Produtos produto;

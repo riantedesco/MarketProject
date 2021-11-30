@@ -3,8 +3,6 @@ package com.compasso.ProjetoMercado.dto;
 import java.time.LocalDate;
 import java.util.List;
 
-import com.compasso.ProjetoMercado.entity.ItemNotaFiscal;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -16,5 +14,5 @@ public class NotaFiscalFormDto {
 	
 	private LocalDate dataHoraEntrada;
 
-    private List<ItemNotaFiscal> itemNotaFiscal;
+    private List<ItemNotaFiscalFormDto> itemNotaFiscal;
 }

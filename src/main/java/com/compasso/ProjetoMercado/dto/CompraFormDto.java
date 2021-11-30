@@ -3,8 +3,6 @@ package com.compasso.ProjetoMercado.dto;
 import java.time.LocalDate;
 import java.util.List;
 
-import com.compasso.ProjetoMercado.entity.ItemCompra;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -18,5 +16,5 @@ public class CompraFormDto {
 	
 	private Long idCaixa;
 
-    private List<ItemCompra> itemCompra;
+    private List<ItemCompraFormDto> itemCompra;
 }

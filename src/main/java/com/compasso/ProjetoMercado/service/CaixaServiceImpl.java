@@ -15,7 +15,6 @@ import com.compasso.ProjetoMercado.dto.CaixaFormDto;
 import com.compasso.ProjetoMercado.dto.DesassociaFuncionarioFormDto;
 import com.compasso.ProjetoMercado.entity.Caixa;
 import com.compasso.ProjetoMercado.entity.Funcionario;
-import com.compasso.ProjetoMercado.exception.ErroChaveEstrangeiraException;
 import com.compasso.ProjetoMercado.repository.CaixaRepository;
 import com.compasso.ProjetoMercado.repository.FuncionarioRepository;
 import com.compasso.ProjetoMercado.validation.DadosNulosValidation;
@@ -38,16 +37,6 @@ public class CaixaServiceImpl implements CaixaService {
 	@Override
 	public CaixaDto salvar(CaixaFormDto body) {
 		Caixa caixa = mapper.map(body, Caixa.class);
-		
-		if (body.getIdFuncionario() != null) {
-			Optional<Funcionario> funcionario = this.funcionarioRepository.findById(body.getIdFuncionario());
-			if (funcionario.isPresent() == true) {
-				caixa.setFuncionario(funcionario.get());
-			} else {
-				throw new ErroChaveEstrangeiraException("Funcionário não encontrado");
-			}
-		}
-			
 		validation.validaCaixa(caixa);
 		Caixa caixaResponse = this.caixaRepository.save(caixa);
 		return mapper.map(caixaResponse, CaixaDto.class);
@@ -98,15 +87,9 @@ public class CaixaServiceImpl implements CaixaService {
 	@Override
 	public CaixaDto atualizar(Long id, CaixaFormDto body) {
 		Optional<Caixa> caixa = this.caixaRepository.findById(id);
-		Optional<Funcionario> funcionario = this.funcionarioRepository.findById(body.getIdFuncionario());
 		if (caixa.isPresent() == true) {
 			caixa.get().setDescricao(body.getDescricao());
 			caixa.get().setSenha(body.getSenha());
-			if (funcionario.isPresent() == true) {
-    			caixa.get().setFuncionario(funcionario.get());
-    		} else {
-    			throw new ErroChaveEstrangeiraException("Funcionário não encontrado");
-    		}
 			Caixa c = this.caixaRepository.save(caixa.get());
 			return mapper.map(c, CaixaDto.class);
 		}

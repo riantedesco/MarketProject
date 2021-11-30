@@ -48,10 +48,14 @@ public class DadosNulosValidation {
 	}
 	
 	public void validaCaixa (Caixa caixa) {
+		if (caixa.getDescricao() == null) {
+			throw new ErroDadosNulosException("A descrição do caixa não pode ser nula");
+		}
+		if (caixa.getSenha() == null) {
+			throw new ErroDadosNulosException("A senha não pode ser nula");
+		}
 		if (caixa.getFuncionario() == null) {
 			caixa.setAtivo(false);
-		} else {
-			caixa.setAtivo(true);
 		}
 	}
 	
@@ -61,9 +65,6 @@ public class DadosNulosValidation {
 		}
 		if (compra.getValorTotal() == null) {
 			throw new ErroDadosNulosException("O valor total não pode ser nulo");
-		}
-		if (compra.getCliente() == null) {
-			throw new ErroDadosNulosException("O cliente não pode ser nulo");
 		}
 		if (compra.getCaixa() == null) {
 			throw new ErroDadosNulosException("O caixa não pode ser nulo");
@@ -76,9 +77,6 @@ public class DadosNulosValidation {
 		}
 		if (itemCompra.getValorTotal() == null) {
 			throw new ErroDadosNulosException("O valor total não pode ser nulo");
-		}
-		if (itemCompra.getCompra() == null) {
-			throw new ErroDadosNulosException("A compra não pode ser nula");
 		}
 	}
 	
@@ -103,9 +101,6 @@ public class DadosNulosValidation {
 		}
 		if (itemNotaFiscal.getValorTotal() == null) {
 			throw new ErroDadosNulosException("O valor total não pode ser nulo");
-		}
-		if (itemNotaFiscal.getNotaFiscal() == null) {
-			throw new ErroDadosNulosException("A nota fiscal não pode ser nula");
 		}
 	}
 	

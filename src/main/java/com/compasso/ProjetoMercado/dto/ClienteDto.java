@@ -4,7 +4,6 @@ import java.time.LocalDate;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.br.CPF;
 
 @Data
 @NoArgsConstructor
@@ -12,7 +11,7 @@ public class ClienteDto {
 	
 	private Long id;
 
-	@CPF
+	//@CPF
 	private Long cpf;
 	
 	private String nome;

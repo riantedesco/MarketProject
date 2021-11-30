@@ -3,6 +3,7 @@ package com.compasso.ProjetoMercado.entity;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -32,6 +33,6 @@ public class Compra {
 	@ManyToOne
 	private Caixa caixa;
 
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ItemCompra> itemCompra;
 }

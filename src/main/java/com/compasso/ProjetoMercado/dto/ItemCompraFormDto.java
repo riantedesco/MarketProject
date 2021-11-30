@@ -9,7 +9,5 @@ public class ItemCompraFormDto {
 	
 	private Integer quantidade;
 	
-	private Long idCompra;
-	
 	private Long idProduto;
 }
