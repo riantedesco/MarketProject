@@ -25,4 +25,6 @@ public class CompraDto {
 	private Caixa caixa;
 
     private List<ItemCompra> itemCompra;
+
+	private Double desc = 0.05;
 }

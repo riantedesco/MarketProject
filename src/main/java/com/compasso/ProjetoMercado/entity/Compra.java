@@ -18,21 +18,22 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class Compra {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	private LocalDate dataHora;
-	
+
 	private Double valorTotal = 0.00;
-	
+
 	@ManyToOne
 	private Cliente cliente;
-	
+
 	@ManyToOne
 	private Caixa caixa;
 
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ItemCompra> itemCompra;
+
 }

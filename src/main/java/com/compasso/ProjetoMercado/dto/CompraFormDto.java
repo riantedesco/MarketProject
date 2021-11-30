@@ -3,6 +3,7 @@ package com.compasso.ProjetoMercado.dto;
 import java.time.LocalDate;
 import java.util.List;
 
+//github.com/riantedesco/ProjetoMercado.git
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
