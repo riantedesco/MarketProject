@@ -15,7 +15,5 @@ public class CaixaDto {
 	
 	private String descricao;
 	
-	private String senha;
-	
 	private Funcionario funcionario;
 }

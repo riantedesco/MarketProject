@@ -52,7 +52,7 @@ public class CaixaServiceImpl implements CaixaService {
 			Caixa c = this.caixaRepository.save(caixa.get());
 			return mapper.map(c, CaixaDto.class);
 		}
-		throw new RuntimeException("Caixa não encontrado");
+		throw new RuntimeException("Caixa ou funcionário não encontrado");
 	}
 	
 	@Override
@@ -89,7 +89,6 @@ public class CaixaServiceImpl implements CaixaService {
 		Optional<Caixa> caixa = this.caixaRepository.findById(id);
 		if (caixa.isPresent() == true) {
 			caixa.get().setDescricao(body.getDescricao());
-			caixa.get().setSenha(body.getSenha());
 			Caixa c = this.caixaRepository.save(caixa.get());
 			return mapper.map(c, CaixaDto.class);
 		}

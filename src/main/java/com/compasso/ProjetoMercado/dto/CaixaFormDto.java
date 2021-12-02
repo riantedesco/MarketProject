@@ -8,6 +8,5 @@ import lombok.NoArgsConstructor;
 public class CaixaFormDto {
 	
 	private String descricao;
-	
-	private String senha;
+
 }

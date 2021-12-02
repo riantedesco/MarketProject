@@ -1,5 +1,7 @@
 package com.compasso.ProjetoMercado.service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -43,6 +45,11 @@ public class NotaFiscalServiceImpl implements NotaFiscalService {
 	@Override
 	public NotaFiscalDto salvar(NotaFiscalFormDto body) {
 		NotaFiscal notaFiscal = mapper.map(body, NotaFiscal.class);
+		
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+		String dataFormatada = LocalDateTime.now().format(dtf);
+		notaFiscal.setDataHoraEntrada(LocalDateTime.parse(dataFormatada, dtf));
+		
 		validation.validaNotaFiscal(notaFiscal);
 		NotaFiscal notaFiscalResponse = this.notaFiscalRepository.save(notaFiscal);
 		return mapper.map(notaFiscalResponse, NotaFiscalDto.class);
@@ -105,7 +112,6 @@ public class NotaFiscalServiceImpl implements NotaFiscalService {
 		Optional<NotaFiscal> notaFiscal = this.notaFiscalRepository.findById(id);
 		if (notaFiscal.isPresent() == true) {
 			notaFiscal.get().setNumero(body.getNumero());
-			notaFiscal.get().setDataHoraEntrada(body.getDataHoraEntrada());
 			NotaFiscal nf = this.notaFiscalRepository.save(notaFiscal.get());
 			return mapper.map(nf, NotaFiscalDto.class);
 		}

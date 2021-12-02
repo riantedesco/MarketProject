@@ -1,6 +1,6 @@
 package com.compasso.ProjetoMercado.entity;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -23,7 +23,7 @@ public class NotaFiscal {
 	
 	private Long numero;
 	
-	private LocalDate dataHoraEntrada;
+	private LocalDateTime dataHoraEntrada;
 	
 	private Double valorTotal = 0.00;
 

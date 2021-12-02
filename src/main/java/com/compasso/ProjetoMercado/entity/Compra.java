@@ -1,6 +1,6 @@
 package com.compasso.ProjetoMercado.entity;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -22,7 +22,7 @@ public class Compra {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private LocalDate dataHora;
+	private LocalDateTime dataHora;
 
 	private Double valorTotal = 0.00;
 

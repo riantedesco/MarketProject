@@ -51,9 +51,6 @@ public class DadosNulosValidation {
 		if (caixa.getDescricao() == null) {
 			throw new ErroDadosNulosException("A descrição do caixa não pode ser nula");
 		}
-		if (caixa.getSenha() == null) {
-			throw new ErroDadosNulosException("A senha não pode ser nula");
-		}
 		if (caixa.getFuncionario() == null) {
 			caixa.setAtivo(false);
 		}

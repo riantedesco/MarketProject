@@ -1,5 +1,7 @@
 package com.compasso.ProjetoMercado.service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -53,6 +55,7 @@ public class CompraServiceImpl implements CompraService {
 	
 	@Override
 	public CompraDto salvar(CompraFormDto body) {
+	   	mapper.getConfiguration().setAmbiguityIgnored(true);
 		Compra compra = mapper.map(body, Compra.class);
 		
 		if (body.getIdCaixa() != null) {
@@ -70,21 +73,16 @@ public class CompraServiceImpl implements CompraService {
 		
 		if (body.getIdCliente() != null) {
 			Optional<Cliente> cliente = this.clienteRepository.findById(body.getIdCliente());
-			if (cliente.isPresent() == true) {
-				compra.setCliente(cliente.get());
-			} else {
-				throw new ErroChaveEstrangeiraException("Cliente não encontrado");
-			}
-		}
-		
-		if (body.getIdCliente() != null) {
-			Optional<Cliente> cliente = this.clienteRepository.findById(body.getIdCliente());
 			if(cliente.isPresent() == true) {
 				compra.setCliente(cliente.get());
 			} else {
 				throw new ErroChaveEstrangeiraException("Cliente não Encontrado");
 			}
 		}
+		
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+		String dataFormatada = LocalDateTime.now().format(dtf);
+		compra.setDataHora(LocalDateTime.parse(dataFormatada, dtf));
 		
 		validation.validaCompra(compra);
 		Compra compraResponse = this.compraRepository.save(compra);
@@ -156,7 +154,6 @@ public class CompraServiceImpl implements CompraService {
 		Optional<Caixa> caixa = this.caixaRepository.findById(body.getIdCaixa());
 		Optional<Cliente> cliente = this.clienteRepository.findById(body.getIdCliente());
 		if (compra.isPresent() == true) {
-			compra.get().setDataHora(body.getDataHora());
 			if (caixa.isPresent() == true) {
     			compra.get().setCaixa(caixa.get());
     		} else {

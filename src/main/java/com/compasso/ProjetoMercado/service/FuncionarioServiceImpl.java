@@ -57,6 +57,7 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 		Optional<Funcionario> funcionario = this.funcionarioRepository.findById(id);
 		if (funcionario.isPresent() == true) {
 			funcionario.get().setCpf(body.getCpf());
+			funcionario.get().setSenha(body.getSenha());
 			funcionario.get().setNome(body.getNome());
 			funcionario.get().setDataNascimento(body.getDataNascimento());
 			funcionario.get().setSexo(body.getSexo());

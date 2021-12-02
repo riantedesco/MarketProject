@@ -1,6 +1,6 @@
 package com.compasso.ProjetoMercado.dto;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import lombok.Data;
@@ -14,7 +14,7 @@ public class NotaFiscalDto {
 	
 	private Long numero;
 	
-	private LocalDate dataHoraEntrada;
+	private LocalDateTime dataHoraEntrada;
 	
 	private Double valorTotal;
 

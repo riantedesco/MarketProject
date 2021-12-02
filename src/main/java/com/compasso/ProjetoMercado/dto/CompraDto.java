@@ -1,6 +1,6 @@
 package com.compasso.ProjetoMercado.dto;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.compasso.ProjetoMercado.entity.Caixa;
@@ -15,7 +15,7 @@ public class CompraDto {
 	
 	private Long id;
 	
-	private LocalDate dataHora;
+	private LocalDateTime dataHora;
 	
 	private Double valorTotal;
 	

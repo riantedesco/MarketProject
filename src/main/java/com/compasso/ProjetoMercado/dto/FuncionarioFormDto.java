@@ -12,6 +12,8 @@ public class FuncionarioFormDto {
 
 	@CPF(message = "Campo Inválido")
 	private String cpf;
+	
+	private String senha;
 
 	private String nome;
 
