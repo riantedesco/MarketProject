@@ -9,6 +9,7 @@ import javax.persistence.Id;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.br.CPF;
 
 @Entity
 @Data
@@ -19,8 +20,8 @@ public class Funcionario {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	//@CPF
-	private Long cpf;
+	@CPF(message = "Campo Inválido")
+	private String cpf;
 	
 	private String nome;
 
