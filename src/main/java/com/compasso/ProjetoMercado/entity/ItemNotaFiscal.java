@@ -24,4 +24,5 @@ public class ItemNotaFiscal {
 	
 	@ManyToOne
 	private Produtos produto;
+	
 }

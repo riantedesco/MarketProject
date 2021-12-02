@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.compasso.ProjetoMercado.entity.Caixa;
 import com.compasso.ProjetoMercado.entity.Cliente;
-import com.compasso.ProjetoMercado.entity.ItemCompra;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,7 +23,5 @@ public class CompraDto {
 	
 	private Caixa caixa;
 
-    private List<ItemCompra> itemCompra;
-
-	private Double desc = 0.05;
+    private List<ItemCompraDto> itemCompra;
 }

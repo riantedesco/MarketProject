@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.compasso.ProjetoMercado.dto.CadastraItensCompraFormDto;
 import com.compasso.ProjetoMercado.dto.CompraDto;
 import com.compasso.ProjetoMercado.dto.CompraFormDto;
 import com.compasso.ProjetoMercado.service.CompraService;
@@ -31,6 +32,12 @@ public class CompraController {
 	@Transactional
 	public ResponseEntity<CompraDto> salvar(@RequestBody @Valid CompraFormDto body) {
 		return ResponseEntity.ok(this.compraService.salvar(body));
+	}
+	
+	@PutMapping("/{id}/cadastraItens")
+	@Transactional
+	public ResponseEntity<CompraDto> cadastrarItens(@PathVariable Long id, @RequestBody @Valid CadastraItensCompraFormDto body) {
+		return ResponseEntity.ok(this.compraService.cadastrarItens(id, body));
 	}
 	
 	@GetMapping

@@ -3,7 +3,6 @@ package com.compasso.ProjetoMercado.entity;
 import java.time.LocalDate;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,6 +27,6 @@ public class NotaFiscal {
 	
 	private Double valorTotal = 0.00;
 
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(orphanRemoval = true)
     private List<ItemNotaFiscal> itemNotaFiscal;
 }

@@ -5,11 +5,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import com.compasso.ProjetoMercado.entity.Cliente;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.compasso.ProjetoMercado.dto.CadastraItensCompraFormDto;
 import com.compasso.ProjetoMercado.dto.CompraDto;
 import com.compasso.ProjetoMercado.dto.CompraFormDto;
 import com.compasso.ProjetoMercado.dto.ItemCompraFormDto;
@@ -20,15 +20,12 @@ import com.compasso.ProjetoMercado.entity.ItemCompra;
 import com.compasso.ProjetoMercado.entity.Produtos;
 import com.compasso.ProjetoMercado.exception.ErroCaixaInativoException;
 import com.compasso.ProjetoMercado.exception.ErroChaveEstrangeiraException;
-import com.compasso.ProjetoMercado.exception.ErroEstqInsuficienteException;
 import com.compasso.ProjetoMercado.repository.CaixaRepository;
 import com.compasso.ProjetoMercado.repository.ClienteRepository;
 import com.compasso.ProjetoMercado.repository.CompraRepository;
 import com.compasso.ProjetoMercado.repository.ItemCompraRepository;
 import com.compasso.ProjetoMercado.repository.ProdutosRepository;
 import com.compasso.ProjetoMercado.validation.DadosNulosValidation;
-
-import javax.validation.constraints.NotNull;
 
 @Service
 public class CompraServiceImpl implements CompraService {
@@ -53,42 +50,10 @@ public class CompraServiceImpl implements CompraService {
 	
 	@Autowired
 	private DadosNulosValidation validation;
-
+	
 	@Override
 	public CompraDto salvar(CompraFormDto body) {
-//		NotaFiscal notaFiscal = new NotaFiscal();
 		Compra compra = mapper.map(body, Compra.class);
-		ItemCompra itemCompra = mapper.map(body.getItemCompra(), ItemCompra.class);
-		List<ItemCompraFormDto> listItemCompra = body.getItemCompra();
-
-//		System.out.println(listItemCompra.size());
-		
-		for(ItemCompraFormDto i : listItemCompra) {
-//			ItemNotaFiscal itemNotaFiscal = new ItemNotaFiscal();
-			if (i.getIdProduto() != null) {
-			    Optional<Produtos> produto = this.produtosRepository.findById(i.getIdProduto());
-				if (produto.isPresent() == true) {
-					itemCompra.setProduto(produto.get());
-					
-					if (produto.get().getQuantidade() >= i.getQuantidade()) {
-						produto.get().setQuantidade(produto.get().getQuantidade() - i.getQuantidade());
-					} else {
-						throw new ErroEstqInsuficienteException("O produto " + produto.get().getNome() +
-								" não possui quantidade suficiente em estoque para realizar a compra");
-					}
-					
-					itemCompra.setQuantidade(i.getQuantidade());
-					itemCompra.setValorTotal(i.getQuantidade() * itemCompra.getProduto().getValor());
-		
-					validation.validaItemCompra(itemCompra);
-					this.itemCompraRepository.save(itemCompra);
-					
-					compra.setValorTotal(compra.getValorTotal() + itemCompra.getValorTotal());
-				} else {
-					throw new ErroChaveEstrangeiraException("Produto não encontrado");
-				}
-		    }
-		}
 		
 		if (body.getIdCaixa() != null) {
 			Optional<Caixa> caixa = this.caixaRepository.findById(body.getIdCaixa());
@@ -111,12 +76,11 @@ public class CompraServiceImpl implements CompraService {
 				throw new ErroChaveEstrangeiraException("Cliente não encontrado");
 			}
 		}
-		// Cálculo Desconto 5%
+		
 		if (body.getIdCliente() != null) {
 			Optional<Cliente> cliente = this.clienteRepository.findById(body.getIdCliente());
 			if(cliente.isPresent() == true) {
 				compra.setCliente(cliente.get());
-				compra.setValorTotal(compra.getValorTotal() - (compra.getValorTotal() * 0.05));
 			} else {
 				throw new ErroChaveEstrangeiraException("Cliente não Encontrado");
 			}
@@ -125,6 +89,48 @@ public class CompraServiceImpl implements CompraService {
 		validation.validaCompra(compra);
 		Compra compraResponse = this.compraRepository.save(compra);
 		return mapper.map(compraResponse, CompraDto.class);
+	}
+	
+	@Override
+	public CompraDto cadastrarItens(Long id, CadastraItensCompraFormDto body) {
+		Optional<Compra> compra = this.compraRepository.findById(id);
+		if (compra.isPresent() == true) {
+			List<ItemCompraFormDto> listaItemCompra = body.getItemCompra();
+			
+			for(ItemCompraFormDto i : listaItemCompra) {
+				ItemCompra itemCompra = mapper.map(body.getItemCompra(), ItemCompra.class);
+				if (i.getIdProduto() != null) {
+				    Optional<Produtos> produto = this.produtosRepository.findById(i.getIdProduto());
+					if (produto.isPresent() == true) {
+						
+						itemCompra.setProduto(produto.get());
+						itemCompra.setQuantidade(i.getQuantidade());
+						itemCompra.setValorTotal(i.getQuantidade() * produto.get().getValor());
+						
+						produto.get().setQuantidade(produto.get().getQuantidade() - i.getQuantidade());
+			
+						validation.validaItemCompra(itemCompra);
+						this.itemCompraRepository.save(itemCompra);
+						
+
+						compra.get().setValorTotal(compra.get().getValorTotal() + itemCompra.getValorTotal());
+						compra.get().getItemCompra().add(itemCompra);
+					} else {
+						throw new ErroChaveEstrangeiraException("Produto não encontrado");
+					}
+			    }
+			}
+			
+			if (compra.get().getCliente() != null ) {
+				// Cálculo Desconto 5%
+				compra.get().setValorTotal(compra.get().getValorTotal() - (compra.get().getValorTotal() * 0.05));
+			}
+			
+			Compra compraResponse = this.compraRepository.save(compra.get());
+			return mapper.map(compraResponse, CompraDto.class);
+		} else {
+			throw new ErroChaveEstrangeiraException("Nota fiscal não encontrada");
+		}
 	}
 
 	@Override
@@ -171,6 +177,11 @@ public class CompraServiceImpl implements CompraService {
 	public void remover(Long id) {
 		Optional<Compra> compra = this.compraRepository.findById(id);
 		if (compra.isPresent() == true) {
+			List<ItemCompra> listaItemCompra = compra.get().getItemCompra();
+			for(ItemCompra i : listaItemCompra) {
+				Optional<Produtos> produto = this.produtosRepository.findById(i.getProduto().getId());
+				produto.get().setQuantidade(produto.get().getQuantidade() + i.getQuantidade());
+			}
 			this.compraRepository.deleteById(id);
 		} else {
 			throw new RuntimeException("Compra não encontrada");

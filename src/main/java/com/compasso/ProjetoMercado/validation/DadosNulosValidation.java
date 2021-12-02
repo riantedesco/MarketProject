@@ -90,9 +90,6 @@ public class DadosNulosValidation {
 	    if (notaFiscal.getValorTotal() == null) {
 			throw new ErroDadosNulosException("O valor total não pode ser nulo");
 		}
-	    if (notaFiscal.getItemNotaFiscal() == null) {
-	    	throw new ErroDadosNulosException("A nota deve possuir pelo menos um item");
-	    }
 	}
 	
 	public void validaItemNotaFiscal (ItemNotaFiscal itemNotaFiscal) {

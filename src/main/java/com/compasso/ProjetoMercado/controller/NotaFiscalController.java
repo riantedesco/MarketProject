@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.compasso.ProjetoMercado.dto.CadastraItensNotaFormDto;
 import com.compasso.ProjetoMercado.dto.NotaFiscalDto;
 import com.compasso.ProjetoMercado.dto.NotaFiscalFormDto;
 import com.compasso.ProjetoMercado.service.NotaFiscalService;
@@ -31,6 +32,12 @@ public class NotaFiscalController {
 	@Transactional
 	public ResponseEntity<NotaFiscalDto> salvar(@RequestBody @Valid NotaFiscalFormDto body) {
 		return ResponseEntity.ok(this.notaFiscalService.salvar(body));
+	}
+	
+	@PutMapping("/{id}/cadastraItens")
+	@Transactional
+	public ResponseEntity<NotaFiscalDto> cadastrarItens(@PathVariable Long id, @RequestBody @Valid CadastraItensNotaFormDto body) {
+		return ResponseEntity.ok(this.notaFiscalService.cadastrarItens(id, body));
 	}
 	
 	@GetMapping

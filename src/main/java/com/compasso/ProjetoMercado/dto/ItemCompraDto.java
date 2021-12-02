@@ -1,6 +1,5 @@
 package com.compasso.ProjetoMercado.dto;
 
-import com.compasso.ProjetoMercado.entity.Compra;
 import com.compasso.ProjetoMercado.entity.Produtos;
 
 import lombok.Data;
@@ -15,8 +14,6 @@ public class ItemCompraDto {
 	private Integer quantidade;
 	
 	private Double valorTotal;
-	
-	private Compra compra;
 	
 	private Produtos produto;
 }
