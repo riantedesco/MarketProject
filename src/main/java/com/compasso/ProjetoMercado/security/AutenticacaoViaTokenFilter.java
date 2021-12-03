@@ -17,7 +17,6 @@ import com.compasso.ProjetoMercado.repository.FuncionarioRepository;
 public class AutenticacaoViaTokenFilter extends OncePerRequestFilter {
 	
 	private TokenService tokenService;
-	
 	private FuncionarioRepository funcionarioRepository;
 	
 	public AutenticacaoViaTokenFilter(TokenService tokenService, FuncionarioRepository funcionarioRepository) {
@@ -34,6 +33,7 @@ public class AutenticacaoViaTokenFilter extends OncePerRequestFilter {
 		if (valido) {
 			autenticarCliente(token);
 		}
+		
 		filterChain.doFilter(request, response);
 	}
 
@@ -49,6 +49,7 @@ public class AutenticacaoViaTokenFilter extends OncePerRequestFilter {
 		if (token == null || token.isEmpty() || !token.startsWith("Bearer ")) {
 			return null;
 		}
+		
 		return token.substring(7, token.length());
 	}
 

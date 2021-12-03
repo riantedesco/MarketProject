@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import com.compasso.ProjetoMercado.dto.AssociaFuncionarioFormDto;
 import com.compasso.ProjetoMercado.dto.CaixaDto;
 import com.compasso.ProjetoMercado.dto.CaixaFormDto;
-import com.compasso.ProjetoMercado.dto.DesassociaFuncionarioFormDto;
 import com.compasso.ProjetoMercado.entity.Caixa;
 import com.compasso.ProjetoMercado.entity.Funcionario;
 import com.compasso.ProjetoMercado.repository.CaixaRepository;
@@ -56,8 +55,8 @@ public class CaixaServiceImpl implements CaixaService {
 	}
 	
 	@Override
-	public CaixaDto desassociarFuncionario(DesassociaFuncionarioFormDto body) {
-		Optional<Caixa> caixa = this.caixaRepository.findById(body.getIdCaixa());
+	public CaixaDto desassociarFuncionario(Long id) {
+		Optional<Caixa> caixa = this.caixaRepository.findById(id);
 		if (caixa.isPresent() == true) {
 			caixa.get().setFuncionario(null);
 			caixa.get().setAtivo(false);

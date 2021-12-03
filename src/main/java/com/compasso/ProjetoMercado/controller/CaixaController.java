@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.compasso.ProjetoMercado.dto.AssociaFuncionarioFormDto;
 import com.compasso.ProjetoMercado.dto.CaixaDto;
 import com.compasso.ProjetoMercado.dto.CaixaFormDto;
-import com.compasso.ProjetoMercado.dto.DesassociaFuncionarioFormDto;
 import com.compasso.ProjetoMercado.service.CaixaService;
 
 @RestController
@@ -41,10 +40,11 @@ public class CaixaController {
 		return ResponseEntity.ok(this.caixaService.associarFuncionario(body));
 	}
 	
-	@PutMapping("/desassociaFuncionario")
+	@PutMapping("/{id}/desassociaFuncionario")
 	@Transactional
-	public ResponseEntity<CaixaDto> desassociarFuncionario(@RequestBody @Valid DesassociaFuncionarioFormDto body) {
-		return ResponseEntity.ok(this.caixaService.desassociarFuncionario(body));
+	public ResponseEntity<CaixaDto> desassociarFuncionario(@PathVariable Long id) {
+		this.caixaService.desassociarFuncionario(id);
+		return ResponseEntity.ok().build();
 	}
 	
 	@GetMapping

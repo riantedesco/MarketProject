@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.compasso.ProjetoMercado.dto.FuncionarioDto;
@@ -30,6 +31,7 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 	@Override
 	public FuncionarioDto salvar(FuncionarioFormDto body) {
 		Funcionario funcionario = mapper.map(body, Funcionario.class);
+		funcionario.setSenha(new BCryptPasswordEncoder().encode(body.getSenha()));
 		validation.validaFuncionario(funcionario);
 		Funcionario funcionarioResponse = this.funcionarioRepository.save(funcionario);
 		return mapper.map(funcionarioResponse, FuncionarioDto.class);

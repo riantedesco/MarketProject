@@ -32,11 +32,14 @@ public class AutenticacaoController {
 		UsernamePasswordAuthenticationToken dadosLogin = form.converter();
 		
 		try {
+			System.out.println("Antes");
 			Authentication authentication = authManager.authenticate(dadosLogin);
+			System.out.println("Depois");
 			String token = tokenService.gerarToken(authentication);
 			return ResponseEntity.ok(new TokenDto(token, "Bearer"));
 		} catch (AuthenticationException e) {
 			return ResponseEntity.badRequest().build();
 		}
+	
 	}
 }
