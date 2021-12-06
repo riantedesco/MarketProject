@@ -9,4 +9,6 @@ public class NotaFiscalFormDto {
 	
 	private Long numero;
 	
+	private Long idFuncionario;
+	
 }

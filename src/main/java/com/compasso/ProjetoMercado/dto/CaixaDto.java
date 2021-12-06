@@ -1,7 +1,5 @@
 package com.compasso.ProjetoMercado.dto;
 
-import com.compasso.ProjetoMercado.entity.Funcionario;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,5 +13,5 @@ public class CaixaDto {
 	
 	private String descricao;
 	
-	private Funcionario funcionario;
+	private FuncionarioDto funcionario;
 }

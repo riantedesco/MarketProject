@@ -57,12 +57,6 @@ public class DadosNulosValidation {
 	}
 	
 	public void validaCompra (Compra compra) {
-		if (compra.getDataHora() == null) {
-			throw new ErroDadosNulosException("A data e hora não podem ser nulas");
-		}
-		if (compra.getValorTotal() == null) {
-			throw new ErroDadosNulosException("O valor total não pode ser nulo");
-		}
 		if (compra.getCaixa() == null) {
 			throw new ErroDadosNulosException("O caixa não pode ser nulo");
 		}
@@ -81,12 +75,10 @@ public class DadosNulosValidation {
 		if (notaFiscal.getNumero() == null) {
 			throw new ErroDadosNulosException("O número não pode ser nulo");
 		}
-		if (notaFiscal.getDataHoraEntrada() == null) {
-			throw new ErroDadosNulosException("A data e hora de entrada não podem ser nulas");
+		if (notaFiscal.getFuncionario() == null) {
+			throw new ErroDadosNulosException("O funcionário não pode ser nulo");
 		}
-	    if (notaFiscal.getValorTotal() == null) {
-			throw new ErroDadosNulosException("O valor total não pode ser nulo");
-		}
+		
 	}
 	
 	public void validaItemNotaFiscal (ItemNotaFiscal itemNotaFiscal) {

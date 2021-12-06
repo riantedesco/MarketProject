@@ -22,6 +22,7 @@ import com.compasso.ProjetoMercado.entity.ItemCompra;
 import com.compasso.ProjetoMercado.entity.Produtos;
 import com.compasso.ProjetoMercado.exception.ErroCaixaInativoException;
 import com.compasso.ProjetoMercado.exception.ErroChaveEstrangeiraException;
+import com.compasso.ProjetoMercado.exception.ErroEstqInsuficienteException;
 import com.compasso.ProjetoMercado.repository.CaixaRepository;
 import com.compasso.ProjetoMercado.repository.ClienteRepository;
 import com.compasso.ProjetoMercado.repository.CompraRepository;
@@ -76,7 +77,7 @@ public class CompraServiceImpl implements CompraService {
 			if(cliente.isPresent() == true) {
 				compra.setCliente(cliente.get());
 			} else {
-				throw new ErroChaveEstrangeiraException("Cliente não Encontrado");
+				throw new ErroChaveEstrangeiraException("Cliente não encontrado");
 			}
 		}
 		
@@ -105,11 +106,14 @@ public class CompraServiceImpl implements CompraService {
 						itemCompra.setQuantidade(i.getQuantidade());
 						itemCompra.setValorTotal(i.getQuantidade() * produto.get().getValor());
 						
-						produto.get().setQuantidade(produto.get().getQuantidade() - i.getQuantidade());
-			
+						if (produto.get().getQuantidade() >= i.getQuantidade()) {
+							produto.get().setQuantidade(produto.get().getQuantidade() - i.getQuantidade());
+						} else {
+							throw new ErroEstqInsuficienteException("Produto " + produto.get().getNome() + " não possui estoque suficiente");
+						}
+						
 						validation.validaItemCompra(itemCompra);
 						this.itemCompraRepository.save(itemCompra);
-						
 
 						compra.get().setValorTotal(compra.get().getValorTotal() + itemCompra.getValorTotal());
 						compra.get().getItemCompra().add(itemCompra);

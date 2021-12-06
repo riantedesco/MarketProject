@@ -15,10 +15,12 @@ import com.compasso.ProjetoMercado.dto.CadastraItensNotaFormDto;
 import com.compasso.ProjetoMercado.dto.ItemNotaFiscalFormDto;
 import com.compasso.ProjetoMercado.dto.NotaFiscalDto;
 import com.compasso.ProjetoMercado.dto.NotaFiscalFormDto;
+import com.compasso.ProjetoMercado.entity.Funcionario;
 import com.compasso.ProjetoMercado.entity.ItemNotaFiscal;
 import com.compasso.ProjetoMercado.entity.NotaFiscal;
 import com.compasso.ProjetoMercado.entity.Produtos;
 import com.compasso.ProjetoMercado.exception.ErroChaveEstrangeiraException;
+import com.compasso.ProjetoMercado.repository.FuncionarioRepository;
 import com.compasso.ProjetoMercado.repository.ItemNotaFiscalRepository;
 import com.compasso.ProjetoMercado.repository.NotaFiscalRepository;
 import com.compasso.ProjetoMercado.repository.ProdutosRepository;
@@ -29,6 +31,9 @@ public class NotaFiscalServiceImpl implements NotaFiscalService {
 	
 	@Autowired
 	private NotaFiscalRepository notaFiscalRepository;
+	
+	@Autowired
+	private FuncionarioRepository funcionarioRepository;
 	
 	@Autowired
 	private ItemNotaFiscalRepository itemNotaFiscalRepository;
@@ -44,7 +49,17 @@ public class NotaFiscalServiceImpl implements NotaFiscalService {
 
 	@Override
 	public NotaFiscalDto salvar(NotaFiscalFormDto body) {
+		mapper.getConfiguration().setAmbiguityIgnored(true);
 		NotaFiscal notaFiscal = mapper.map(body, NotaFiscal.class);
+		
+		if (body.getIdFuncionario() != null) {
+			Optional<Funcionario> funcionario = this.funcionarioRepository.findById(body.getIdFuncionario());
+			if(funcionario.isPresent() == true) {
+				notaFiscal.setFuncionario(funcionario.get());
+			} else {
+				throw new ErroChaveEstrangeiraException("Funcionário não encontrado");
+			}
+		}
 		
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 		String dataFormatada = LocalDateTime.now().format(dtf);
@@ -83,6 +98,7 @@ public class NotaFiscalServiceImpl implements NotaFiscalService {
 					}
 			    }
 			}
+			
 			NotaFiscal notaFiscalResponse = this.notaFiscalRepository.save(notaFiscal.get());
 			return mapper.map(notaFiscalResponse, NotaFiscalDto.class);
 		} else {
@@ -110,8 +126,14 @@ public class NotaFiscalServiceImpl implements NotaFiscalService {
 	@Override
 	public NotaFiscalDto atualizar(Long id, NotaFiscalFormDto body) {
 		Optional<NotaFiscal> notaFiscal = this.notaFiscalRepository.findById(id);
+		Optional<Funcionario> funcionario = this.funcionarioRepository.findById(body.getIdFuncionario());
 		if (notaFiscal.isPresent() == true) {
 			notaFiscal.get().setNumero(body.getNumero());
+			if (funcionario.isPresent() == true) {
+				notaFiscal.get().setFuncionario(funcionario.get());
+    		} else {
+    			throw new ErroChaveEstrangeiraException("Funcionário não encontrado");
+    		}
 			NotaFiscal nf = this.notaFiscalRepository.save(notaFiscal.get());
 			return mapper.map(nf, NotaFiscalDto.class);
 		}

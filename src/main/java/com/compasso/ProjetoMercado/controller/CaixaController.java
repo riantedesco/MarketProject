@@ -43,8 +43,7 @@ public class CaixaController {
 	@PutMapping("/{id}/desassociaFuncionario")
 	@Transactional
 	public ResponseEntity<CaixaDto> desassociarFuncionario(@PathVariable Long id) {
-		this.caixaService.desassociarFuncionario(id);
-		return ResponseEntity.ok().build();
+		return ResponseEntity.ok(this.caixaService.desassociarFuncionario(id));
 	}
 	
 	@GetMapping

@@ -17,6 +17,8 @@ public class NotaFiscalDto {
 	private LocalDateTime dataHoraEntrada;
 	
 	private Double valorTotal;
+	
+	private FuncionarioDto funcionario;
 
     private List<ItemNotaFiscalDto> itemNotaFiscal;
 }
